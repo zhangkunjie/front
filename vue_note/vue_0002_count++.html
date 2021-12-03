@@ -7,17 +7,17 @@
       </div>
 </body>
 <script>
-    const Counter = {
+const Counter = {
 data() {
   return {
     counter: 1
-  },
-  mounted(){
+  }
+},
+mounted() {
     setInterval(() => {
       this.counter++
-    }, 1000);
+    }, 1000)
   }
 }
-}
-Vue.createApp(Counter).mount('#counter')
+Vue.createApp(Counter).mount('#counter') 
 </script>
