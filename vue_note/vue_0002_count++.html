@@ -1,0 +1,23 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+<div id="counter">
+        Counter: {{ counter }}
+      </div>
+</body>
+<script>
+    const Counter = {
+data() {
+  return {
+    counter: 1
+  },
+  mounted(){
+    setInterval(() => {
+      this.counter++
+    }, 1000);
+  }
+}
+}
+Vue.createApp(Counter).mount('#counter')
+</script>
