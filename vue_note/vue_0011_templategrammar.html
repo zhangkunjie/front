@@ -1,0 +1,21 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+  <div id="template_grammar">
+    <span>Message:{{msg}}</span>
+  <div>
+</body>
+<script>
+// 模板语法
+  const app = Vue.createApp({
+    data() {
+      return {
+        msg: 1
+      }
+    }
+  })
+  // 绑定app到页面元素上
+  app.mount('#template_grammar')
+</script>
+<!--字符串反转-->
