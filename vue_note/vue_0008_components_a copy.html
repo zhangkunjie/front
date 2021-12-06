@@ -1,0 +1,27 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="components_a">
+    <ol>
+      <todo-item></todo-item>
+    </ol>
+    <div>
+</body>
+<script>
+  // 定义组件
+  const TodoItem = {
+    //这样会为每个待办项渲染同样的文本,并不灵活
+    template: '<li>This is a todo</li>'
+  }
+  // 新建一个app，并绑定组件
+  const app = Vue.createApp({
+    components: {
+      TodoItem
+    }
+  })
+  // 绑定app到页面元素上
+  app.mount('#components_a')
+</script>
+<!--字符串反转-->
