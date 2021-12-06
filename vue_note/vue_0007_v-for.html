@@ -1,0 +1,29 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+  <div id="list-rendreing">
+      <ol>
+       <li v-for='todo in todos'>
+            {{todo.text}}
+       </li>
+      </ol>
+    <div>
+</body>
+<script>
+  const ListRendering = {
+    data() {
+      return {  
+        todos:
+        [
+          {text:'Learn JavaScript'},
+          {text:'Learn Vue'},
+          {text:'Build something awesome'}
+         
+        ]
+      }
+    }
+  }
+  Vue.createApp(ListRendering).mount('#list-rendreing')
+</script>
+<!--字符串反转-->

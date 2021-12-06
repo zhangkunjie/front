@@ -1,0 +1,19 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+  <div id="conditional-rendering">
+    <span v-if='seen'>现在你看到我了</span>
+  </div>
+</body>
+<script>
+  const ConditionalRendering = {
+    data() {
+      return {
+        seen:true
+      }
+    }
+  }
+  Vue.createApp(ConditionalRendering).mount('#conditional-rendering')
+</script>
+<!--字符串反转-->
