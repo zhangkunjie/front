@@ -1,33 +1,58 @@
 <head>
   <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
 </head>
+
 <body>
   <div id="template_grammar">
-      <table border="1">
-      <tr><td><span>Message:{{msg}}</span></td><td>双大括号赋值</td></tr>
-      <tr><td><span><span v-once>这个将不会改变: {{ msg }}</span></td><td> 通过使用 v-once 指令，你也能执行一次性地插值，当数据改变时，插值处的内容不会更新。但请留心这会影响到该节点上的其它数据绑定：</td></tr>
-      <tr><td>Using mustaches: {{ rawHtml }}</td><td>直接赋值html</td></tr>
-      <tr><td><span v-html="rawHtml"></span></td><td>v-html:浏览器直接解析html</td></tr>
-      <tr><td><div v-bind:id="dynamicId">123</div></td></tr>
-      <tr><td><button v-bind:disabled="isButtonDisabled">按钮</button></td></tr>
-      <tr><td>{{number+1}}</td></tr>
-      <tr><td>{{ ok ? 'YES' : 'NO' }}</td></tr>
-      <tr><td>{{ message.split('').reverse().join('') }}</td></tr>
+    <table border="1">
+      <tr>
+        <td><span>Message:{{msg}}</span></td>
+        <td>双大括号赋值</td>
+      </tr>
+      <tr>
+        <td><span><span v-once>这个将不会改变: {{ msg }}</span></td>
+        <td> 通过使用 v-once 指令，你也能执行一次性地插值，当数据改变时，插值处的内容不会更新。但请留心这会影响到该节点上的其它数据绑定：</td>
+      </tr>
+      <tr>
+        <td>Using mustaches: {{ rawHtml }}</td>
+        <td>直接赋值html</td>
+      </tr>
+      <tr>
+        <td><span v-html="rawHtml"></span></td>
+        <td>v-html:浏览器直接解析html</td>
+      </tr>
+      <tr>
+        <td>
+          <div v-bind:id="dynamicId">123</div>
+        </td>
+      </tr>
+      <tr>
+        <td><button v-bind:disabled="isButtonDisabled">按钮</button></td>
+      </tr>
+      <tr>
+        <td>{{number+1}}</td>
+      </tr>
+      <tr>
+        <td>{{ ok ? 'YES' : 'NO' }}</td>
+      </tr>
+      <tr>
+        <td>{{ message.split('').reverse().join('') }}</td>
+      </tr>
     </table>
     <div>
 </body>
 <script>
-// 模板语法
+  // 模板语法-插值
   const app = Vue.createApp({
     data() {
       return {
         msg: 1,
-        rawHtml:'<h1>原始的html</h1>',
-        dynamicId:1,
-        isButtonDisabled:'truthy',
-        number:10,
-        ok:'YES',
-        message:'abc'
+        rawHtml: '<h1>原始的html</h1>',
+        dynamicId: 1,
+        isButtonDisabled: 'truthy',
+        number: 10,
+        ok: 'YES',
+        message: 'abc'
       }
     }
   })

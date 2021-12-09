@@ -1,0 +1,40 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="template_grammar">
+    <table border="1">
+      <tr>
+        <td>
+          <p v-if='seen'>现在你看到我了</p>
+        </td>
+      </tr>
+      <tr>
+        <td><a v-bind:href='url'>百度</a></td>
+      </tr>
+      <tr>
+        <td><button v-on:click='showInfo()'>点击提示</button></td>
+      </tr>
+    </table>
+    <div>
+</body>
+<script>
+  // 模板语法-指令
+  const app = Vue.createApp({
+    data() {
+      return {
+        seen: true,
+        url: 'http://www.baidu.com'
+      }
+    },
+    methods: {
+      showInfo() {
+        alert('弹出提示信息')
+      },
+    }
+  })
+  // 绑定app到页面元素上
+  app.mount('#template_grammar')
+</script>
+<!--字符串反转-->
