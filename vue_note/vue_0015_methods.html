@@ -1,0 +1,58 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          当前数字是:{{count}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          点击调用increment方法改变数字的值:<button @click='increment'>按钮</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span :title='toTitleDate(date)'>
+            {{ formatDate(date)}}
+          </span>
+        </td>
+      </tr>
+    </table>
+    <div>
+</body>
+<script>
+  // 模板语法-缩写
+  const app = Vue.createApp({
+    data() {
+      return {
+        count: 4,
+        date: new Date()
+      }
+    },
+    methods: {
+      increment() {
+        //this指向该组件示例
+        this.count++
+      },
+      toTitleDate(date) {
+        return date
+      },
+      formatDate(date) {
+        year = date.getFullYear()
+        month = date.getMonth() + 1
+        day = date.getDate()
+        formattedDate = year + '-' + month + '-' + day
+        return formattedDate
+      }
+    }
+  })
+  const vm = app.mount('#app')
+  console.log(vm.count) //结果是4
+  vm.increment() //调用实例方法
+  console.log(vm.count) //结果是5
+</script>
