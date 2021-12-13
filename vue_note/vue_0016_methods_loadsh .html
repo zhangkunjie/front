@@ -1,0 +1,41 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          函数防抖（debounce）:
+          解释：当持续触发某事件时，一定时间间隔内没有再触发事件时，事件处理函数才会执行一次，如果设定的时间间隔到来之前，又一次触发了事件，就重新开始延时。
+          函数节流（throttle）
+          解释：当持续触发事件时，有规律的每隔一个时间间隔执行一次事件处理函数。
+        </td>
+      </tr>
+      <tr>
+        <td><input  v-model='content'></td>
+      </tr>
+      <tr>
+        <td><button @click='clickFun'>点击弹出内容</button></td>
+      </tr>
+    </table>
+    <div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        content: 'abc'
+      }
+    },
+    methods: {
+      //用 Lodash 的防抖函数
+      clickFun:_.debounce(function(){
+           alert(this.content)
+      },3000) //延迟3秒再调用函数
+    }
+  })
+  app.mount('#app')
+</script>
