@@ -1,0 +1,57 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          计算属性默认只有 getter，不过在需要时你也可以提供一个 setter：
+          现在再运行 vm.fullName = 'John Doe' 时，setter 会被调用，app.firstName 和 vm.lastName 也会相应地被更新。
+          <p>Fullname1单向绑定:<input v-model='fullName1' /></p>
+          <p>Fullname2双向绑定:<input v-model='fullName2' /></p>
+        </td>
+      </tr>
+      <tr>
+        <td>firstName:<input v-model='firstName' /></p>
+        </td>
+      </tr>
+      <tr>
+        <td>lastName:<input v-model='lastName' /></p>
+        </td>
+      </tr>
+    </table>
+    <div>
+</body>
+<script>
+  app = Vue.createApp({
+    data() {
+      return {
+        firstName: 'Tom',
+        lastName: 'Hanks'
+      }
+    },
+    //计算属性
+    computed: {
+      //单向绑定
+      fullName1: {
+        get() {
+          return this.firstName + ' ' + this.lastName
+        }
+      },
+      //双向绑定
+      fullName2: {
+        get() {
+          return this.firstName + ' ' + this.lastName
+        },
+        set(newValue) {
+          const names = newValue.split(' ')
+          this.firstName = names[0]
+          this.lastName = names[names.length - 1]
+        }
+      }
+    }
+  })
+  app.mount('#app')
+</script>
