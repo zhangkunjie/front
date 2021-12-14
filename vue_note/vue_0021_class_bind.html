@@ -1,0 +1,64 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          <div class='static' :class="{ active: isActive, 'text-danger': hasError }">我们可以传给 :class (v-bind:class 的简写)
+            一个对象，以动态地切换 class：</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div :class="classObject">可以使用classObject来绑定class</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div :class="classObject1">可以使用计算属性classObject1来绑定class</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div :class="[activeClass,errorClass]">可以使用数组classn传递给class</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div :class="[{ active: isActive }, errorClass]">class="[{ active: isActive }, errorClass]"</div>
+        </td>
+      </tr>
+    </table>
+    <div>
+</body>
+<script>
+  //class绑定
+  const app = Vue.createApp({
+    data() {
+      return {
+        isActive: true,
+        hasError: false,
+        error: null,
+        activeClass: 'active',
+        errorClass: 'text-danger',
+        classObject: {
+          active: true,
+          'text-danger': false
+        }
+      }
+    },
+    //可以使用计算属性来绑定class
+    computed: {
+      classObject1() {
+        return {
+          active: this.isActive && !this.error,
+          'text-danger': this.error && this.error.type === 'fatal'
+        }
+      }
+    }
+  })
+  app.mount('#app')
+</script>
