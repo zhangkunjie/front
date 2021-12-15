@@ -1,0 +1,82 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>条件渲染</td>
+      </tr>
+      <tr>
+        <td>
+          <h5 v-if='awesome'>Vue is awesome!</h5>
+          <h5 v-else>Oh no!</h5>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          因为 v-if 是一个指令，所以必须将它添加到一个元素上。但是如果想切换多个元素呢？此时可以把一个 template
+            元素当做不可见的包裹元素，并在上面使用 v-if。最终的渲染结果将不包含 template 元素。
+              <template v-if="ok">
+                <h1>Title</h1>
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+              </template>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面，否则它将不会被识别。
+          <div v-if="Math.random() > 0.5">
+            Now you see me
+          </div>
+          <div v-else>
+            Now you don't
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          v-else-if，顾名思义，充当 v-if 的“else-if 块”，并且可以连续使用：
+          <div v-if="type=='A'">
+            A
+          </div>
+          <div v-else-if="type=='B'">
+            B
+          </div>
+          <div v-else-if="type=='C'">
+            C
+          </div>
+          <div v-else> 
+            Not A/B/C
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          v-show:无论盘点条件是否为真都会渲染，只不过判断条件为假的时候，就会调用display：none让元素不显示
+          <h1 v-show="ok">Hello!</h1>
+          v-if 是“真正”的条件渲染，因为它会确保在切换过程中，条件块内的事件监听器和子组件适当地被销毁和重建。
+          v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+          相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。     
+          一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 
+          v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
+        </td>
+      </tr>
+    </table>
+    <div>
+</body>
+<script>
+  //class绑定
+  const app = Vue.createApp({
+    data() {
+      return {
+        awesome: true,
+        ok: true,
+        type:'C'
+      }
+    }
+  })
+  app.mount('#app')
+</script>
