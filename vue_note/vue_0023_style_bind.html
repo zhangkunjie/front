@@ -1,0 +1,60 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          :style 的对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象。
+          CSS property 名可以用驼峰式 (camelCase)
+          或短横线分隔 (kebab-case，记得用引号括起来) 来命名：
+          <div :style="{ color: activeColor, fontSize: fontSize + 'px' }">
+            加了样式的内容
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          对象语法的方式：
+          <div :style='styleObject'>
+            对象语法方式绑定样式
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          数组语法绑定样式:
+          <div :style="[styleObject, backStyleObject]">一次绑定多个样式对象</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          多重值：这样写只会渲染数组中最后一个被浏览器支持的值。在本例中，
+          如果浏览器支持不带浏览器前缀的 flexbox，那么就只会渲染 display: flex。
+          <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
+        </td>
+      </tr>
+    </table>
+    <div>
+</body>
+<script>
+  //class绑定
+  const app = Vue.createApp({
+    data() {
+      return {
+        activeColor: 'red',
+        fontSize: 18,
+        styleObject: {
+          color: 'green',
+          fontSize: '13px'
+        },
+        backStyleObject: {
+          background: 'blue'
+        }
+      }
+    }
+  })
+  app.mount('#app')
+</script>
