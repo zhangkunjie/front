@@ -1,0 +1,80 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>列表渲染</td>
+      </tr>
+      <tr>
+        <td>v-for渲染数组:
+          <li v-for='item in items'>
+            {{item.message}}
+          </li>
+        </td>
+      </tr>
+      <tr>
+        <td>v-for使用of渲染数组:
+          <li v-for='item of items'>
+            {{item.message}}
+          </li>
+        </td>
+      </tr>
+      <tr>
+        <td>v-for渲染数组和数组索引:
+          <li v-for='(item,index) in items'>
+            {{parentMessage}}-{{item.message}}-{{index}}
+          </li>
+        </td>
+      </tr>
+      <tr>
+        <td>v-for遍历对象:
+          <li v-for='value in myObject'>
+            {{value}}
+          </li>
+        </td>
+      </tr>
+      <tr>
+        <td>v-for遍历对象+key+索引:
+          在遍历对象时，会按 Object.keys() 的结果遍历，但是不能保证它在不同
+          JavaScript 引擎下的结果都一致。
+          <li v-for='(value,name,index) in myObject'>
+            {{index}}.{{name}}:{{value}}
+          </li>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          为了给 Vue 一个提示，以便它能跟踪每个节点的身份，
+          从而重用和重新排序现有元素，你需要为每项提供一个唯一的 key attribute：
+          <li v-for=' item in items' :key='item.id'>
+             {{item}}
+          </li>
+        </td>
+      </tr>
+    </table>
+    <div>
+</body>
+<script>
+  //遍历列表
+  const app = Vue.createApp({
+    data() {
+      return {
+        parentMessage: 'Parent',
+        items: [{
+          message: 'Bar'
+        }, {
+          message: 'Foo'
+        }],
+        myObject: {
+          title: 'How to do lists in Vue',
+          author: 'Jane Doe',
+          publishedAt: '2016-04-10'
+        }
+      }
+    }
+  })
+  app.mount('#app')
+</script>

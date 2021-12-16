@@ -1,0 +1,61 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <form v-on:submit.prevent='addNewTodo'>
+      <label for="new-todo">Add a todo</label>
+      <input v-model='newTodoText' id='new-todo' placeholder="E.g Feed the cat" />
+      <button>Add</button>
+    </form>
+    <ul>
+      <todo-item v-for='(todo,index) in  todos' :key='todo.id' :title='todo.title' @remove='todos.splice(index,1)'>
+      </todo-item>
+    </ul>
+    <div>
+</body>
+<script>
+  //组件遍历列表，好处就是导出组件之后可以复用，如果写死，代码就会各种重复
+  const app = Vue.createApp({
+    data() {
+      return {
+        newTodoText: '',
+        todos: [{
+            id: 1,
+            title: 'Do the dishes'
+          },
+          {
+            id: 2,
+            title: 'Take out the trash'
+          },
+          {
+            id: 3,
+            title: 'Mow the lawn'
+          }
+        ],
+        nextTodoId: 4
+      }
+    },
+    methods: {
+      addNewTodo() {
+        this.todos.push({
+          id: this.nextTodoId++,
+          title: this.newTodoText
+        })
+      }
+    }
+  })
+  app.component('todo-item', {
+      template: `
+      <li>
+         {{title}}
+         <button @click="$emit('remove')">Remove</button>
+      </li>
+      `,
+      props: ['title'],
+      emits: ['remove']
+    }
+  )
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
