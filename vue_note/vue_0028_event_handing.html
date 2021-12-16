@@ -1,0 +1,92 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          1、方法直接写在v-on指令中:简单的可以，复杂的不行
+          <button @click='counter+=1'>Add 1</button>
+          <p>The button above has been clicked {{ counter }} times.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          2、复杂的业务逻辑还得写在methods中,注意:该方法没括号
+          <button @click='greet'>Greet</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          3、内联处理器，数据可以从页面直接传递给方法:注意:该方法有括号
+          <button v-on:click="say('hi')">Say hi</button>
+          <button v-on:click="say('what')">Say what</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          4、内联处理器，使用特殊变量$event
+          <button @click="warn('Form cannot be submitted yet.', $event)">
+            Submit
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          5、多事件处理器，使用逗号分割 
+          <button @click="add(2,3),minus(2,3)">
+            add计算加法，minus计算减法
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  //监听事件
+  const app = Vue.createApp({
+    data() {
+      return {
+        counter: 0,
+        name: 'Vue.js'
+      }
+    },
+    methods: {
+      greet(event) {
+        // `methods` 内部的 `this` 指向当前活动实例
+        alert('Hello' + this.name + '!')
+        //`event` 是原生 DOM event
+        if (event) {
+          //事件目标名称，这里是BUTTON
+          alert(event.target.tagName)
+        }
+      },
+      //message:在data中并没有定义，它直接来自于页面传递的参数
+      say(message) {
+        alert(message)
+      },
+      //点击按钮不提交
+      warn(message, event) {
+        //现在可以访问到原生事件
+        if (event) {
+          event.preventDefault()
+        }
+        alert(message)
+      },
+      //两数之和
+      add(num1,num2)
+      {
+        alert(num1+num2)
+      },
+      //两数之差
+      minus(num1,num2)
+      {
+        alert(num1-num2)
+      }
+
+    }
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
