@@ -1,0 +1,77 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          Vue为最常用的键提供了别名：
+          .enter
+          .tab
+          .delete
+          .esc
+          .space
+          .up
+          .down
+          .left
+          .right
+        </td>
+        <td>
+          按enter键弹出消息:
+        </td>
+        <td>
+          <input @keyup.enter='show(this.message1)' v-model='message1' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          可以用如下修饰符来实现仅在按下相应按键时才触发鼠标或键盘事件的监听器
+          .ctrl
+          .alt
+          .shift
+          .meta
+        </td>
+        <td>
+          按shift弹出消息:
+        </td>
+        <td>
+          <input @keyup.shift='show(this.message2)' v-model='message2' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          鼠标按键修饰符
+          .left
+          .right
+          .middle
+        </td>
+        <td>
+          单击左键弹出消息:
+        </td>
+        <td>
+          <input @click.left='show(this.message3)' v-model='message3' />
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  //键盘按键修饰符
+  const app = Vue.createApp({
+    data() {
+      return {
+        message1: '',
+        message2: '',
+        message3: '',
+      }
+    },
+    methods: {
+      show(msg) {
+        alert(msg)
+      }
+    }
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
