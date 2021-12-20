@@ -1,0 +1,173 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          文本
+        </td>
+        <td>
+          <input v-model='message' placeholder="edit me" />
+          <p>Message is : {{ message }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          多行文本
+        </td>
+        <td>
+          <textarea v-model='message1' placeholder="edit me">
+          </textarea>
+          <p style="white-space: pre-line;">Message is : {{ message1 }}</p>
+          </br>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          复选框
+        </td>
+        <td>
+          <input type='checkbox' v-model='checked' />
+          <label for='checked'>{{checked}}</label>
+          </br>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          多个复选框组成一组
+        </td>
+        <td>
+          <input type="checkbox" id="jack" value="Jack" v-model="checkedNames" />
+          <label for="jack">Jack</label>
+          <input type="checkbox" id="john" value="John" v-model="checkedNames" />
+          <label for="john">John</label>
+          <input type="checkbox" id="mike" value="Mike" v-model="checkedNames" />
+          <label for="mike">Mike</label>
+          <input type="checkbox" v-model="toggle" true-value="yes" false-value="no" />
+          <label for="jack">toggle</label>
+          <br />
+          <span>Checked names: {{ checkedNames }}</span>
+          <span>Checked names: {{ toggle }}</span>
+          </br>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          单选框:v-model必须绑定同一个数据值
+        </td>
+        <td>
+          <input type='radio' value='One' v-model='picked' />
+          <label for='one'>One</label>
+          <input type='radio' value='Two' v-model='picked' />
+          <label for='two'>Two</label>
+          </br>
+          <span>Picked:{{picked}}</>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          下拉菜单-单选:
+        </td>
+        <td>
+          <select v-model='selected'>
+            <option disabled value=''>请选择一个</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+          </select>
+          </br>
+          <span>Selected：:{{selected}}</se>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          下拉菜单-多选:
+        </td>
+        <td>
+          <select v-model='selectedMore' multiple>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+          </select>
+          </br>
+          <span>Selected：:{{selectedMore}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          v-for:填充下拉菜单
+        </td>
+        <td>
+          <select v-model='selectedFor'>
+            <option v-for='option in options' :value='option.value'>
+              {{option.text}}
+            </option>
+          </select>
+          </br>
+          <span>Selected:{{selectedFor}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          修饰符
+          .lazy change事件之后进行同步</br>
+          .number用户的输入值转为数值类型</br>
+          .trim自动过滤用户输入的首尾空白字符</br>
+        </td>
+        <td>
+          .lazy:<input v-model.lazy="msg1" />
+          .number:<input v-model.number="age" type="text" />
+          .trim<input v-model.trim="msg2" /></br>
+          输入框的结果是:
+          msg1:{{msg1}}</br>
+          age:{{age}}</br>
+          msg2:{{msg2}}</br>
+
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  //键盘按键修饰符
+  const app = Vue.createApp({
+    data() {
+      return {
+        message: '',
+        message1: '',
+        checked: false,
+        toggle: '',
+        checkedNames: [],
+        picked: '',
+        selected: '',
+        selectedMore: '',
+        selectedFor: 'A',
+        options: [{
+            text: 'One',
+            value: 'A'
+          },
+          {
+            text: 'Two',
+            value: 'B'
+          },
+          {
+            text: 'Three',
+            value: 'C'
+          }
+        ],
+        msg1: '',
+        age: '',
+        msg2: ''
+      }
+    },
+    methods: {
+      show(msg) {
+        alert(msg)
+      }
+    }
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
