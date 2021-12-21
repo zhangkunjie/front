@@ -1,0 +1,34 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <table border="1">
+    <br>
+    有些 HTML 元素，诸如 ul、ol、table 和 select，对于哪些元素可以出现在其内部是有严格限制的。
+    而有些元素，诸如 li、tr 和 option，只能出现在其它某些特定的元素内部。
+    <textarea disabled='true'>
+          <table>
+            <blog-post-row></blog-post-row>
+          </table>
+        </textarea>
+    </br>
+    这个自定义组件 blog-post-row 会被作为无效的内容提升到外部，
+    并导致最终渲染结果出错。我们可以使用特殊的 is attribute 作为一个变通的办法：
+    </br>
+    <textarea disabled='true'>
+          <table>
+            <tr is="vue:blog-post-row"></tr>
+          </table>
+        </textarea>
+    </br>
+    当它用于原生 HTML 元素时，is 的值必须以 vue: 开头，才可以被解释为 Vue 组件。这是避免和原生自定义元素混淆。
+    </td>
+    </tr>
+  </table>
+</body>
+<script>
+  //组件基本示例
+  const app = Vue.createApp({})
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
