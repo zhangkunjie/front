@@ -1,0 +1,50 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          自定义组件inuput绑定v-model
+        </td>
+        <td>
+        <custom-input v-model="modelValue">
+        </custom-input>
+        <button @click='show_msg()'>显示输入信息</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  //组件基本示例
+  const app = Vue.createApp({
+    data(){
+      return
+      {
+        modelValue:''
+      }
+    },
+    methods:{
+      show_msg()
+      {
+        alert(this.modelValue)
+      }
+    }
+  })
+  app.component('custom-input', {
+    //通过props向组件传递数据
+    props: ['modelValue'],
+    emits: ['update:modelValue'],
+    template: `
+    <input 
+     :value='modelValue'
+     @input="$emit('update:modelValue',$event.target.value)"
+    >
+    `
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+  console.log(vm.$.data)
+</script>

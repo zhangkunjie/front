@@ -1,0 +1,57 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          自定义组件inuput绑定v-model,
+          默认情况下，组件上的 v-model 使用 modelValue 作为 
+          prop 和 update:modelValue 作为事件。我们可以通过向 v-model 传递参数来修改这些名称
+          getter 和 setter。get 方法应返回 modelValue property，set 方法应该触发相应的事件。  
+        </td>
+        <td>
+          <custom-input v-model="modelValue">
+          </custom-input>
+          <button @click='show_msg()'>显示输入信息</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  //组件基本示例
+  const app = Vue.createApp({
+    data() {
+      return {
+        modelValue: ''
+      }
+    },
+    methods: {
+      show_msg() {
+        alert(this.modelValue)
+      }
+    }
+  })
+  app.component('custom-input', {
+    //通过props向组件传递数据
+    props: ['modelValue'],
+    emits: ['update:modelValue'],
+    template: `<input v-model="value">`,
+    //在该组件中实现 v-model 的另一种方法是使用 computed property 的功能来定义 
+    //getter 和 setter。get 方法应返回 modelValue property，set 方法应该触发相应的事件。
+    computed: {
+      value: {
+        get() {
+          return this.modelValue
+        },
+        set(value) {
+          this.$.emit('update:modelValue', value)
+        }
+      }
+    }
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
