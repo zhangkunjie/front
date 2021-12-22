@@ -1,0 +1,84 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <table border="1">
+    <tr>
+      <td>
+        组件名称
+      </td>
+      <td>
+        可以小写，单词之间用中划线连接或者驼峰方式
+        当使用 PascalCase (首字母大写命名) 定义一个组件时，你在引用这个自定义元素时两种命名法都可以使用。也就是说 &lt;my-component-name&gt; 和
+        &lt;MyComponentName&gt; 都是可接受的。注意，尽管如此，直接在 DOM (即非字符串的模板) 中使用时只有 kebab-case 是有效的
+      </td>
+    </tr>
+    <tr>
+      <td>
+        全局注册
+      </td>
+      <td>
+        Vue.createApp({...})</br>
+        app.component('component-a', {})</br>
+        app.component('component-b', {})</br>
+        app.component('component-c', {})</br>
+        &lt;div id="app"&gt;</br>
+        &lt;component-a&gt; &lt;/component-a&gt;</br>
+        &lt;component-b&gt; &lt;/component-b&gt;</br>
+        &lt;component-c&gt; &lt;/component-c&gt;</br>
+        &lt;/div&gt;
+      </td>
+    </tr>
+    <tr>
+      <td>
+        局部注册
+      </td>
+      <td>
+        定义组件:
+        const ComponentA = {
+        /* ... */
+        }</br>
+        const ComponentB = {
+        /* ... */
+        }</br>
+        const ComponentC = {
+        /* ... */
+        }</br>
+        然后在 components 选项中定义你想要使用的组件：</br>
+        const app = Vue.createApp({</br>
+        components: {</br>
+        'component-a': ComponentA,</br>
+        'component-b': ComponentB</br>
+        }</br>
+        })
+        对于 components 对象中的每个 property 来说，其 property 名就是自定义元素的名字，
+        其 property 值就是这个组件的选项对象。
+        注意局部注册的组件在其子组件中不可用。例如，如果你希望 ComponentA 在 ComponentB 中可用，
+        则你需要这样写：
+        const ComponentA = {
+        /* ... */
+        }</br>
+        const ComponentB = {</br>
+        components: {</br>
+        'component-a': ComponentA</br>
+        }</br>
+        // ...
+        }</br>
+        或者如果你通过 Babel 和 webpack 使用 ES2015 模块，那么代码看起来像这样：
+        import ComponentA from './ComponentA.vue'</br>
+        export default {</br>
+        components: {</br>
+        ComponentA</br>
+        }</br>
+        // ...</br>
+        }</br>
+      </td>
+    </tr>
+  </table>
+</body>
+<script>
+  //组件基本示例
+  const app = Vue.createApp({})
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
