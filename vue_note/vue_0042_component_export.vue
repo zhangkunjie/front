@@ -3,16 +3,17 @@
 </head>
 <template>
   <div>
-    <p class="red fsize">Hello {{ names }}</p>
+    <p class="red fsize">Hello {{ student_name }}</p>
   </div>
 </template>
 <script>
 //局部组件
 export default {
+  name:'hello',
   data: function () {
     {
       return {
-        names: "张一",
+        student_name: "张一",
       };
     }
   },
