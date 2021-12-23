@@ -1,0 +1,44 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <table border="1" id='app'>
+    <tr>
+      <td>
+        字符串:props: ['title', 'likes', 'isPublished', 'commentIds', 'author']
+        但是，通常你希望每个 prop 都有指定的值类型。这时，你可以以对象形式列出 prop，
+        这些 property 的名称和值分别是 prop 各自的名称和类型：
+        props: {
+        title: String,
+        likes: Number,
+        isPublished: Boolean,
+        commentIds: Array,
+        author: Object,
+        callback: Function,
+        contactsPromise: Promise // 或任何其他构造函数
+        }
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        字符串bang:
+      </td>
+      <td>
+        <blog-post title='静态字符串'></blog-post>
+      </td>
+    </tr>
+  </table>
+</body>
+<script>
+  const app = Vue.createApp({})
+  app.component('blog-post', {
+    props: {
+      title: String
+    },
+    template: `<h5>{{title}}</h5>`
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
