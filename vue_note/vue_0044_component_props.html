@@ -6,17 +6,17 @@
   <table border="1" id='app'>
     <tr>
       <td>
-        字符串:props: ['title', 'likes', 'isPublished', 'commentIds', 'author']
-        但是，通常你希望每个 prop 都有指定的值类型。这时，你可以以对象形式列出 prop，
-        这些 property 的名称和值分别是 prop 各自的名称和类型：
-        props: {
-        title: String,
-        likes: Number,
-        isPublished: Boolean,
-        commentIds: Array,
-        author: Object,
-        callback: Function,
-        contactsPromise: Promise // 或任何其他构造函数
+        字符串:props: ['title', 'likes', 'isPublished', 'commentIds', 'author']</br>
+        但是，通常你希望每个 prop 都有指定的值类型。这时，你可以以对象形式列出 prop，</br>
+        这些 property 的名称和值分别是 prop 各自的名称和类型：</br>
+        props: {</br>
+        title: String,</br>
+        likes: Number,</br>
+        isPublished: Boolean,</br>
+        commentIds: Array,</br>
+        author: Object,</br>
+        callback: Function,</br>
+        contactsPromise: Promise // 或任何其他构造函数</br>
         }
       </td>
       <td>
@@ -24,21 +24,100 @@
     </tr>
     <tr>
       <td>
-        字符串bang:
+        字符串绑定:
       </td>
       <td>
         <blog-post title='静态字符串'></blog-post>
+        <blog-post :title='post.title'></blog-post>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        数字绑定:
+      </td>
+      <td>
+        <blog-post likes='42'></blog-post>
+        <blog-post :likes='post.likes'></blog-post>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        布尔值,默认是false:
+      </td>
+      <td>
+        <blog-post isPublished></blog-post>
+        布尔值必须使用bind的方式才能绑定值
+        <blog-post :is-published='true'></blog-post>
+        <blog-post :is-published='post.isPublished'></blog-post>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        传入数组:
+      </td>
+      <td>
+        直接传数组或者动态传数组,即便数组是静态的，我们仍需通过 `v-bind` 来告诉 Vue
+        <blog-post :comment-ids='[1,1,1,1]'></blog-post>
+        <blog-post :comment-ids='post.commentIds'></blog-post>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        传入对象:
+      </td>
+      <td>
+        <blog-post :author="{
+          name:'李四',
+          company:'百度'
+        }"></blog-post>
+        <blog-post :author='post.author.name'></blog-post>
+        <blog-post :author='post.author'></blog-post>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        传入对象的所有属性:
+        如果想要将一个对象的所有 property 都作为 prop 传入，可以使用不带参数的
+        v-bind (用 v-bind 代替 :prop-name)。例如，对于一个给定的对象 post：
+      </td>
+      <td>
+        <blog-post v-bind='post'></blog-post>
       </td>
     </tr>
   </table>
 </body>
 <script>
-  const app = Vue.createApp({})
+  const app = Vue.createApp({
+    data() {
+      return {
+        post: {
+          title: '对象绑定',
+          likes: 42,
+          isPublished: true,
+          commentIds: [1, 2, 3, 4, 5],
+          author: {
+            name: '作者姓名',
+            company: '作者公司'
+          }
+        }
+      }
+    }
+  })
   app.component('blog-post', {
     props: {
-      title: String
+      title: String,
+      likes: Number,
+      isPublished: Boolean,
+      commentIds: Array,
+      author: Object
     },
-    template: `<h5>{{title}}</h5>`
+    template: `
+      <h5>{{title}}</h5>
+      <h5>{{likes}}</h5>   
+      <h5>{{isPublished}}</h5>   
+      <h5>{{commentIds}}</h5>  
+      <h5>{{author}}</h5> 
+    `
   })
   const vm = app.mount('#app') //mount方法返回根组件实例
 </script>
