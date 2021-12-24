@@ -1,0 +1,43 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <table border="1" id='app'>
+    <tr>
+      <td>
+        所有的 prop 都使得其父子 prop 之间形成了一个单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。
+        这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解。
+        另外，每次父级组件发生变更时，子组件中所有的 prop 都将会刷新为最新的值。
+        这意味着你不应该在一个子组件内部改变 prop。如果你这样做了，Vue 会在浏览器的控制台中发出警告。
+        这里有两种常见的试图变更一个prop 的情形：
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        这个 prop 用来传递一个初始值；这个子组件接下来希望将其作为一个本地的 prop 数据来使用。
+        在这种情况下，最好定义一个本地的 data property 并将这个 prop 作为其初始值
+      </td>
+      <td>
+        <blog-post initialCounter=5 ></blog-post>
+      </td>
+      </tr>
+  </table>
+</body>
+<script>
+  const app = Vue.createApp({})
+  app.component('blog-post', {
+    props:['initialCounter'],
+    data(){
+      return{
+        counter:this.initialCounter++
+      }
+    },
+    template: `
+      <h5>{{initialCounter}}</h5>
+    `
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
