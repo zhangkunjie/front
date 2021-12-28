@@ -1,0 +1,69 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <table border="1" id='app'>
+    <tr>
+      <td>
+        一个非 prop 的 attribute 是指传向一个组件，但是该组件并没有相应 props 或 emits 定义的 attribute。
+        常见的示例包括 class、style 和 id 属性。
+      </td>
+      <td>
+        <my-component id="demo" class="red" name='小明'></my-component>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        如果你不希望组件的根元素继承 attribute，可以在组件的选项中设置 inheritAttrs: false。
+        禁用 attribute 继承的常见场景是需要将 attribute 应用于根节点之外的其他元素。
+        通过将 inheritAttrs 选项设置为 false，你可以使用组件的 $attrs property 将
+        attribute 应用到其它元素上，该 property 包括组件 props 和 emits property 中未包含的所有属性
+        (例如，class、style、v-on 监听器等)。使用上一节中的 date-picker 组件示例，如果需要将所有非
+        prop 的 attribute 应用于 input 元素而不是根 div 元素，可以使用 v-bind 缩写来完成。
+      </td>
+      <td>
+        <my-component1 id="demo" class="red" name='小明'></my-component1>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        与单个根节点组件不同，具有多个根节点的组件不具有自动 attribute fallthrough (隐式贯穿) 行为。
+        如果未显式绑定 $attrs，将发出运行时警告。
+      </td>
+      <td>
+        <my-component2 id="demo" class="red" name='小明'></my-component2>
+      </td>
+    </tr>
+
+  </table>
+</body>
+<script>
+  const app = Vue.createApp({})
+  app.component('my-component', {
+    props: {
+      name: String
+    },
+    template: `<h5>Hello,{{name}}</h5>`
+  })
+  app.component('my-component1', {
+    inheritAttrs: false,
+    props: {
+      name: String
+    },
+    template: `<div>Hello,<h5 v-bind="$attrs">{{name}}</h5></div>`
+  })
+  //
+  app.component('my-component2', {
+    props: {
+      name: String
+    },
+    template: `<h4>{{name}}</h4><h5>{{name}}</h5>`
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
+<style>
+  .red {
+    color: red
+  }
+</style>
