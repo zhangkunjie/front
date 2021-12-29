@@ -1,0 +1,67 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <table border="1" id='app'>
+    <tr>
+      <td>
+        子组件调用子组件方法
+      </td>
+      <td>
+        <my-component1 ref='child' @show-msg=''></my-component1>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        子组件调用父组件方法
+      </td>
+      <td>
+        <my-component2 @show-msg='show2'></my-component2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        父组件调用子组件方法
+      </td>
+      <td>
+        <button @click='show3'>父组件调用子组件方法</button>
+      </td>
+    </tr>
+  </table>
+</body>
+<script>
+  const app = Vue.createApp({
+    methods: {
+      show2() {
+        alert(456)
+      },
+      show3() {
+        this.$refs.child.show1()
+      }
+    }
+  })
+  app.component('my-component1', {
+      props: {
+        name: String
+      },
+      methods: {
+        show1() {
+          alert(123)
+        }
+      },
+      template: `
+    <button  @click="show1">子组件调用子组件方法</button>
+    `
+    }),
+    app.component('my-component2', {
+      props: {
+        name: String
+      },
+      emits: ['showMsg'],
+      template: `
+    <button  @click="$emit('showMsg')">子组件调用父组件方法</button>
+    `
+    })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>
