@@ -1,0 +1,44 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <table border="1" id='app'>
+    <tr>
+      <td>
+        正如我们之前在 v-model 参数中所学的那样，通过利用以特定 prop 和事件为目标的能力，
+        我们现在可以在单个组件实例上创建多个v-model 绑定。每个 v-model 将同步到不同的 prop，
+        而不需要在组件中添加额外的选项：
+      </td>
+      <td>
+        <my-component 
+        v-model:first-name='firstName'
+        v-model:last-name='lastName'
+        >
+        </my-com  ponent>
+      </td>
+    </tr>
+  </table>
+</body>
+<script>
+ const app = Vue.createApp({
+ })
+ app.component('my-component', {
+   props: {
+     firstName: String,
+     lastName:String
+   },
+   emits:['update:firstName','update:lastName'],
+   template: `
+     <input 
+       type="text"
+       :value="firstName"
+       @input="$emit('update:firstName', $event.target.value)">
+       <input 
+       type="text"
+       :value="lastName"
+       @input="$emit('update:lastName', $event.target.value)">
+   `
+ })
+ app.mount('#app')
+</script>
