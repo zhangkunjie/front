@@ -1,0 +1,46 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  slot元素有一个特殊的 attribute：name。
+  通过它可以为不同的插槽分配独立的 ID，也就能够以此来决定内容应该渲染到什么地方：
+  <div class="container" id='app'>
+    <base-layout>
+      <template v-slot:header>
+        <h1>这是头部</h1>
+      </template>
+      <template v-slot:default>
+        <p>这是主要内容</p>
+        <p>And another one.</p>
+      </template>
+      <template v-slot:footer>
+        <p>这是底部</p>
+      </template>
+    </base-layout>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({})
+  app.component('base-layout', {
+    data() {
+      return {
+        item: 'Second Item'
+      }
+    },
+    template: `
+<div class="container">
+  <header>
+    <slot name="header"></slot>
+  </header>
+  <main>
+    <slot></slot>
+  </main>
+  <footer>
+    <slot name="footer"></slot>
+  </footer>
+</div>
+   `
+  })
+  app.mount('#app')
+</script>
