@@ -6,7 +6,6 @@
   <div class="container" id='app'>
     <todo-list>
       <template v-slot:iname="slotProps">
-        <i class="fas fa-check"></i>
         <span class="green">{{ slotProps.item }}</span>
       </template>
       <template v-slot:other="otherSlotProps">

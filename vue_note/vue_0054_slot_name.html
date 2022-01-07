@@ -5,12 +5,14 @@
 <body>
   slot元素有一个特殊的 attribute：name。
   通过它可以为不同的插槽分配独立的 ID，也就能够以此来决定内容应该渲染到什么地方：
+  跟 v-on 和 v-bind 一样，v-slot 也有缩写，即把参数之前的所有内容 (v-slot:) 
+  替换为字符 #。例如 v-slot:header 可以被重写为 #header：
   <div class="container" id='app'>
     <base-layout>
-      <template v-slot:header>
+      <template #header>
         <h1>这是头部</h1>
       </template>
-      <template v-slot:default>
+      <template  #default>
         <p>这是主要内容</p>
         <p>And another one.</p>
       </template>

@@ -1,0 +1,35 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div class="container" id='app'>
+    作用域插槽的内部工作原理是将你的插槽内容包括在一个传入单个参数的函数里,</br>
+    这意味着 v-slot 的值实际上可以是任何能够作为函数定义中的参数的 JavaScript 表达式
+    <todo-list v-slot="{ item }">
+        {{ item }}
+    </todo-list>
+    或者:
+    <todo-list v-slot="{ item:tudo }">
+      {{ tudo }}
+  </todo-list>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({})
+  app.component('todo-list', {
+    data() {
+      return {
+        items: ['喂猫', '买牛奶', '做饭']
+      }
+    },
+    template: `
+    <ul>
+       <li v-for="(item,index) in items">
+        <slot  :item="item" :index="index" :another-attribute="anotherAttribute"></slot>
+      </li> 
+    </ul>
+   `
+  })
+  app.mount('#app')
+</script>
