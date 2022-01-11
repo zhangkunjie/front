@@ -8,7 +8,7 @@
       @click="currentTab=tab">
       {{ tab }}
     </button>
-     <!-- keep-alive失活的组件将会被缓存！ -->
+     <!-- keep-alive失活的组件将会被缓存！如果不用keep-alive 返回tab之后文章还是会折叠 -->
     <keep-alive>
       <component :is="currentTabComponent" class="tab"></component>
     </keep-alive>
