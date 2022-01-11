@@ -1,0 +1,120 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div class='demo' id='app'>
+    <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]"
+      @click="currentTab=tab">
+      {{ tab }}
+    </button>
+     <!-- keep-alive失活的组件将会被缓存！ -->
+    <keep-alive>
+      <component :is="currentTabComponent" class="tab"></component>
+    </keep-alive>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        currentTab: 'Home',
+        tabs: ['Home', 'Posts', 'Archive']
+      }
+    },
+    computed: {
+      currentTabComponent() {
+        return 'tab-' + this.currentTab.toLowerCase()
+      }
+    }
+  })
+  app.component('tab-home', {
+    template: `<div class='demo-tab'>Home组件</div>`
+  })
+  app.component('tab-posts', {
+    template: `<div class="dynamic-component-demo-posts-tab">
+    <ul class="dynamic-component-demo-posts-sidebar">
+      <li
+        v-for="post in posts"
+        :key="post.id"
+        :class="{
+          'dynamic-component-demo-active': post === selectedPost
+        }"
+        @click="selectedPost = post"
+      >
+        {{ post.title }}
+      </li>
+    </ul>
+    <div class="dynamic-component-demo-post-container">
+      <div v-if="selectedPost" class="dynamic-component-demo-post">
+        <h3>{{ selectedPost.title }}</h3>
+        <div v-html="selectedPost.content"></div>
+      </div>
+      <strong v-else>
+        Click on a blog title to the left to view it
+      </strong>
+    </div>
+  </div>`,
+    data() {
+      return {
+        posts: [{
+            id: 1,
+            title: '吃饭',
+            content: '<p>吃什么</p>'
+          },
+          {
+            id: 2,
+            title: '睡觉',
+            content: '<p>几点睡觉</p>'
+          },
+          {
+            id: 3,
+            title: '打豆豆',
+            content: '<p>怎么打</p>'
+          }
+        ],
+        selectedPost: null
+      }
+    }
+  })
+  app.component('tab-archive', {
+    template: `<div class="demo-tab">Archive 组件</div>`
+  })
+  app.mount('#app')
+</script>
+<style>
+  .demo {
+    font-family: sans-serif;
+    border: 1px solid #eee;
+    border-radius: 2px;
+    padding: 20px 30px;
+    margin-top: 1em;
+    margin-bottom: 40px;
+    user-select: none;
+    overflow-x: auto;
+  }
+
+  .tab-button {
+    padding: 6px 10px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background: #f0f0f0;
+    margin-bottom: -1px;
+    margin-right: -1px;
+  }
+
+  .tab-button:hover {
+    background: #e0e0e0;
+  }
+
+  .tab-button.active {
+    background: #e0e0e0;
+  }
+
+  .demo-tab {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+</style>
