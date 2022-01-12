@@ -1,0 +1,47 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  in-out: 新元素先进行进入过渡，完成之后当前元素过渡离开。</br>
+  out-in: 当前元素先进行离开过渡，完成之后新元素过渡进入。</br>
+  组件之间的过渡更简单——我们甚至不需要 key 属性。取而代之的是，我们包裹了一个动态组件 ：
+  <div id="app">
+    <div id="demo">
+      <input v-model="view" type="radio" value="v-a" id="a"><label for="a">A</label>
+      <input v-model="view" type="radio" value="v-b" id="b"><label for="b">B</label>
+      <transition name="component-fade" mode="out-in">
+        <component :is="view"></component>
+      </transition>
+    </div>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        view: 'v-a'
+      }
+    },
+    components: {
+      'v-a': {
+        template: `<div>Component A</div>`
+      },
+      'v-b': {
+        template: `<div>Component B</div>`
+      }
+    }
+  })
+  app.mount('#app')
+</script>
+<style>
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+</style>

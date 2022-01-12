@@ -1,0 +1,48 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    CSS动画用法同CSS过渡，区别是在动画中 v-enter-from 类在节点插入 DOM 后不会立即移除，而是在 animationend 事件触发时移除。</br>
+    <button @click='show=!show'>
+      Toggle
+    </button>
+    <transition name='bounce'>
+      <p v-if='show'>12345</p>
+    </transition>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        show: true
+      }
+    },
+  })
+  app.mount('#app')
+</script>
+<style>
+  .bounce-enter-active {
+    animation: bounce-in 3s;
+  }
+
+  .bounce-leave-active {
+    animation: bounce-in 3s reverse;
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: scaleX(0);
+    }
+
+    50% {
+      transform: scaleX(0.5);
+    }
+
+    100% {
+      transform: scaleX(1);
+    }
+  }
+</style>
