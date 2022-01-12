@@ -1,43 +1,31 @@
 <head>
   <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"></script>
 </head>
 
 <body>
-  那么怎么同时渲染整个列表，比如使用 v-for？在这种场景下，我们会使用 &lt;transition-group&gt;组件。</br>
-  在我们深入例子之前，先了解关于这个组件的几个特点：</br>
-  默认情况下，它不会渲染一个包裹元素，但是你可以通过 tag attribute 指定渲染一个元素。</br>
-  过渡模式不可用，因为我们不再相互切换特有的元素。</br>
-  内部元素总是需要提供唯一的 key attribute 值。</br>
-  CSS 过渡的类将会应用在内部的元素中，而不是这个组/容器本身。</br>
   <div id="app">
-    <button @click='add'>Add</button>
-    <button @click='remove'>Remove</button></br>
-    <transition-group name='list' tag='p'>
-      <span v-for="item in items" :key="item" class="list-item" tag='p'> 
-        {{item}}
-      </span>
-    </transition-group>
+    <input v-model.number="number" type="number" step="20" />
+    <p>{{ animatedNumber }}</p>
   </div>
 </body>
 <script>
   const app = Vue.createApp({
     data() {
       return {
-        items:[1,2,3,4,5,6,7,8,9],
-        nextNum:10
+        number: 0,
+        tweenedNumber: 0
       }
     },
-    methods:{
-      randomIndex(){
-        return Math.floor(Math.random()*this.items.length)
-      },
-      add(){
-        this.items.splice(this.randomIndex(),0,this.nextNum++)
-      },
-      remove()
-      {
-        this.items.splice(this.randomIndex(),1)
+    computed:{
+      animatedNumber(){
+        return this.tweenedNumber.toFixed(0)
       }
+    },
+    watch:{
+      number(newValue) {
+      gsap.to(this.$data, { duration: 0.5, tweenedNumber: newValue })
+    }
     }
   })
   app.mount('#app')
