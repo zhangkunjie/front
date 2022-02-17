@@ -1,0 +1,23 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <input v-focus />
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({
+    //局部指令
+    directives: {
+      focus: {
+        mounted(el) {
+          // 聚焦元素
+          el.focus()
+        }
+      }
+    }
+  })
+  app.mount('#app')
+</script>

@@ -1,0 +1,28 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    自定义指令v-color:设置不同属性和属性的颜色
+    <p v-color:[color_style]='color'>123</p>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        color_style: 'color',
+        color: 'green'
+      }
+    }
+  })
+  app.directive('color', {
+    mounted(el, binding) {
+      const style_name = binding.arg || 'color'
+      console.log(style_name)
+      el.style[style_name] = binding.value
+    }
+  })
+  app.mount('#app')
+</script>
