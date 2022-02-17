@@ -1,0 +1,27 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+  <div id="app">
+    你还可以为 Vue 应用程序全局应用 mixin： 
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({
+  custom: 'hello!'
+})
+app.config.optionMergeStrategies.custom = (toVal, fromVal) => {
+  console.log(fromVal, toVal)
+  // => "goodbye!", undefined
+  // => "hello", "goodbye!"
+  return fromVal || toVal
+}
+
+app.mixin({
+  custom: 'goodbye!',
+  created() {
+    console.log(this.$options.custom) // => "hello!"
+  }
+})
+app.mount('#app') // => "hello!"
+</script>

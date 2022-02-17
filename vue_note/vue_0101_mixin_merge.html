@@ -1,0 +1,59 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+  <div id="app">
+    {{message}}
+    当组件和 mixin 对象含有同名选项时，这些选项将以恰当的方式进行“合并”。<br>
+    比如，每个 mixin 可以拥有自己的 data 函数。每个 data 函数都会被调用，并将返回结果合并。在数据的 property 发生冲突时，会以组件自身的数据为优先。<br>
+    同名钩子函数将合并为一个数组，因此都将被调用。另外，mixin 对象的钩子将在组件自身钩子之前调用。<br>
+    值为对象的选项，例如 methods、components 和 directives，将被合并为同一个对象。两个对象键名冲突时，取组件对象的键值对。<br>
+  </div>
+</body>
+<script>
+const myMixin = {
+  created() {
+    console.log('mixin 对象的钩子被调用')
+  },
+  data() {
+    return {
+      message: 'hello',
+      foos: 'abc'
+    }
+  },
+  methods: {
+    foo() {
+      console.log('foo')
+    },
+    conflicting() {
+      console.log('from mixin')
+    }
+  }
+}
+
+const app = Vue.createApp({
+  mixins: [myMixin],
+  data() {
+    return {
+      message: 'goodbye',
+      bars: 'def'
+    }
+  },
+  created() {
+    console.log('组件钩子被调用')
+    console.log(this.$data) // => { message: "goodbye", foo: "abc", bar: "def" }
+  },
+  methods: {
+    bar() {
+      console.log('bar')
+    },
+    conflicting() {
+      console.log('from self')
+    }
+  }
+})
+const vm=app.mount('#app')
+vm.foo()
+vm.bar()
+vm.conflicting()
+</script>
