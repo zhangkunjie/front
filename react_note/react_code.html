@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js" ></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" >
+    const name='Json Perez';
+    const element=<h1>Helle,{name}</h1>;
+    ReactDOM.render(
+     element,
+    document.getElementById('root') 
+    );
+  </script>
+</body>
+</html>
