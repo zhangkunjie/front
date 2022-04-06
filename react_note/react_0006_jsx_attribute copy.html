@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  因为 JSX 语法上更接近 JavaScript 而不是 HTML，所以 React DOM 使用 camelCase（小驼峰命名）来定义属性的名称，而不使用 HTML 属性名称的命名约定。
+例如，JSX 里的 class 变成了 className，而 tabindex 则变为 tabIndex
+  <div id="root"></div>
+  <script type="text/babel">
+    const element1 = <div tabIndex="0">0</div>;
+    const element2= <a href='http://wwww.baidu.com'>百度</a>;
+    ReactDOM.render(
+    element1,
+    document.getElementById('root') 
+    );
+  </script>
+</body>
+</html>
