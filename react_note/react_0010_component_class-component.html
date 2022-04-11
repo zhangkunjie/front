@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  你同时还可以使用 ES6 的 class 来定义组件：
+  组件名称必须以大写字母开头。
+  React 会将以小写字母开头的组件视为原生 DOM 标签。例如，<div /> 代表 HTML 的 div 标签，而 <Welcome /> 则代表一个组件，并且需在作用域内使用 Welcome。  
+  <div id="root"></div>
+  <script type="text/babel">
+  class Welcome extends React.Component{
+    render(){
+      return <h1>Hello,{this.props.name}</h1>;
+    }
+  }
+  const element=<Welcome name='Sara'/>
+  ReactDOM.render(element,document.getElementById('root'))
+  </script>
+</body>
+
+</html>
