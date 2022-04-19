@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+React 中的条件渲染和 JavaScript 中的一样，使用 JavaScript 运算符 if 或者条件运算符去创建元素来表现当前的状态，然后让 React 根据它们来更新 UI。
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    //注册用户登录
+    function LoginButton(props) {
+      return (
+        <button onClick={props.onClick}>
+          Login
+        </button>
+      );
+    }
+    //游客登录
+    function LogoutButton(props) {
+      return (
+        <button onClick={props.onClick}>
+          Logout
+        </button>
+      );
+    }
+    //根据状态判断是注册用户还是游客
+    function Greeting(props) {
+      const isLoggedIn = props.isLoggedIn;
+      if (isLoggedIn) {
+        return <LogoutButton />
+      }
+      return <LoginButton />
+    }
+    class LoginControl extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { isLoggedIn: false }
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+      }
+      handleLoginClick() {
+        this.setState({ isLoggedIn: true })
+
+      }
+      handleLogoutClick() {
+        this.setState({ isLoggedIn: false })
+
+      }
+      render() {
+        const isLoggedIn = this.state.isLoggedIn;
+        let button;
+        if (isLoggedIn) {
+          button = <LogoutButton onClick={this.handleLogoutClick} />
+        }
+        else {
+          button = <LoginButton onClick={this.handleLoginClick} />
+        }
+        return (
+          <div>
+            <Greeting isLoggedIn={isLoggedIn} />
+            {button}
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<LoginControl/>, document.getElementById('root'));
+  </script>
+</body>
+
+</html>
