@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  元素的 key 只有放在就近的数组上下文中才有意义。<br>
+  比方说，如果你提取出一个 ListItem 组件，你应该把 key 保留在数组中的这个
+  <ListItem /> 元素上，而不是放在 ListItem 组件中的 <li> 元素上。<br>
+    列表中的每个孩子都应该有一个唯一的“关键”属性。
+    原因: : 这是由于在进行组件遍历的时候没有加一个key来进行区分每个组件,因为dom需要deff进行对比
+    进行循环遍历生成组件的,将key设置为index即可
+    <div id="root"></div>
+    <script type="text/babel">
+      function ListItem(props) {
+        const value = props.value;
+        return (
+          <li>
+            {value}
+          </li>
+        )
+      }
+      function NumberList(props) {
+        const numbers = props.numbers;
+        const listItems = numbers.map((number, index) =>
+          <ListItem key={number.toString()} value={number} />
+        );
+        return (
+          <ul>{listItems}</ul>
+        )
+      }
+      const numbers = [1, 2, 3, 4, 5];
+      ReactDOM.render(<NumberList numbers={numbers} />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>
