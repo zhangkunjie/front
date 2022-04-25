@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  表单-textarea:React中，&lt;textarea&gt; 使用 value 属性代替。这样，可以使得使用&lt;textarea&gt;的表<br>
+  <div id="root"></div>
+ <script type="text/babel">
+  class EssayForm extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { value: '请撰写一篇关于你喜欢的 DOM 元素的文章.' };
+      this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleChange(event) {
+
+      this.setState({ value: event.target.value });
+    }
+    handleSubmit(event) {
+      alert('提交的文章:' + this.state.value);
+      event.preventDefault();
+    }
+    render() {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            文章:
+            <textarea value={this.state.value} onChange={this.handleChange} />
+            </label>
+          <input type="submit" value='提交' />
+        </form>
+      )
+    };
+  }
+  ReactDOM.render(<EssayForm />, document.getElementById('root'));
+</script>
+</body>
+
+</html>
