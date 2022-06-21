@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  React 有十分强大的组合模式。我们推荐使用组合而非继承来实现组件间的代码重用。
+  <div id="root"></div>
+  <script type="text/babel">
+  function FancyBorder(props)
+  {
+    return (
+      <div className={'FancyBorder FancyBorder-'+props.color}>
+        {props.children}
+      </div>
+    )
+  }
+  //这个组件组合了第一个组件
+  function WelcomeDialog(){
+  return (
+    <FancyBorder color="blue">  
+    <h1 className='Dialog-title'>
+      Welcome 
+    </h1>
+    <p className='Dialog-message'>
+      Thank you for visiting our spacecraft!
+    </p>
+    </FancyBorder>   
+    );
+  }
+  ReactDOM.render(<WelcomeDialog />, document.getElementById('root'));
+</script>
+</body>
+
+</html>
