@@ -30,8 +30,8 @@
   综上所述，属于 state 的有：
   用户输入的搜索词
   复选框是否选中的值
-  4、确定哪些组件拥有state
-  对于应用中的每一个 state：<br>
+  4、确定哪些组件拥有state <br>
+  对于应用中的每一个 state：
   找到根据这个 state 进行渲染的所有组件。
   找到他们的共同所有者（common owner）组件（在组件层级上高于所有需要该 state 的组件）。
   该共同所有者组件或者比它层级更高的组件应该拥有该 state。
@@ -39,7 +39,7 @@
   ProductTable 需要根据 state 筛选产品列表。SearchBar 需要展示搜索词和复选框的状态。
   他们的共同所有者是 FilterableProductTable。
   因此，搜索词和复选框的值应该很自然地存放在 FilterableProductTable 组件中。<br>
-  5、回调函数
+  5、编写控制函数 <br>
   每当用户改变表单的值，我们需要改变 state 来反映用户的当前输入。由于 state 只能由拥有它们的组件进行更改，FilterableProductTable 必须将一个能够触发 state 改变的回调函数（callback）传递给 SearchBar。我们可以使用输入框的 onChange 事件来监视用户输入的变化，并通知 FilterableProductTable 传递给 SearchBar 的回调函数。然后该回调函数将调用 setState()，从而更新应用
   <div id="container"></div>
   <script type="text/babel">
