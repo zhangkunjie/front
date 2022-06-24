@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    // Theme context，默认的 theme 是 “light” 值
+    const ThemeContext = React.createContext('lv');
+    // 用户登录 context
+    const UserContext = React.createContext({
+      name: 'Guest',
+    });
+    class App extends React.Component {
+      render() {
+        const { signedInUser, theme } = this.props;
+
+        // 提供初始 context 值的 App 组件
+        return (
+          <ThemeContext.Provider value={theme}>
+            <UserContext.Provider value={signedInUser}>
+              <Layout />
+            </UserContext.Provider>
+          </ThemeContext.Provider>);
+      }
+    }
+
+    function Layout() {
+      return (
+        <div>
+          <Content />
+        </div>
+      );
+    }
+
+    // 一个组件可能会消费多个 context
+    function Content() {
+      return (
+        <UserContext.Consumer>
+          {
+            user => (
+            <input type='text' value={user} />
+             )
+          }    
+        </UserContext.Consumer>);
+    }
+
+
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+  <style>
+    .hong {
+      color: red
+    }
+
+    .lv {
+      color: green
+    }
+  </style>
+</body>
+
+</html>
