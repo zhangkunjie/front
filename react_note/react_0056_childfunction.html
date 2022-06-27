@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    // 调用子元素回调 numTimes 次，来重复生成组件
+    function Repeat(props) {
+      let items = [];
+      for (let i = 0; i < props.numTimes; i++) {
+        //这段代码有问题，暂时搁置
+        items.push(props.children(i))  ;
+      }
+      return <div>{items}</div>;
+    }
+    
+    function ListOfTenThings() {
+      return (
+        <Repeat numTimes={10}>
+          {(index) => <div key={index}>This is item {index} in the list</div>}    </Repeat>
+      );
+    }
+    ReactDOM.render(<ListOfTenThings />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

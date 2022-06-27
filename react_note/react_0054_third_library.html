@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  在开发中，我们可能遇到这样的场景：
+  某些页面是必须用户登录成功才能进行进入；
+  如果用户没有登录成功，那么直接跳转到登录页面；
+  这个时候，我们就可以使用高阶组件来完成鉴权操作：
+  <div id="root"></div>
+  <script type="text/babel">
+    //定义高阶组件
+    function withAuth(WrappendComponent) {
+      const NewCpn = function (props) {
+        const { isLogin } = props;
+        if (isLogin) {
+          return <WrappendComponent {...props} />
+        }
+        else {
+          return <LoginPage {...props} />
+        }
+      }
+      NewCpn.displayName = 'AuthCpn'
+      return NewCpn;
+    }
+    //登录组件
+    class LoginPage extends React.Component {
+      render() {
+        return (
+          <h5>LoginPage</h5>
+        )
+      }
+    }
+    //购物车组件
+    class CartPage extends React.Component {
+      render() {
+        return (
+          <h5>CartPage</h5>
+        )
+      }
+    }
+    const AuthCartPage = withAuth(CartPage);
+
+    class App extends React.Component {
+      render() {
+        return (
+          <div>
+            <AuthCartPage isLogin={false} />
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>
