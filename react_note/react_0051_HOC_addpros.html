@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  高阶组件的应用:不修改原有代码的情况下，添加新的props：
+  <div id="root"></div>
+  <script type="text/babel">
+    //定义一个基础组件
+    class Home extends React.Component {
+      render() {
+        return (
+          <h5>Home {`昵称:${this.props.nickname} 等级:${this.props.level} 区域:${this.props.region}`}</h5>
+        )
+      }
+    }
+    function enhanceRegionProps(WrappedComponent) {
+      return props => {
+        return <WrappedComponent {...props} region='中国' />
+      }
+    }
+    const EnhanceComponent = enhanceRegionProps(Home)
+    class App extends React.Component {
+      render() {
+        return (
+          <EnhanceComponent nickname='zep' level={99} />
+        )
+      }
+    }
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

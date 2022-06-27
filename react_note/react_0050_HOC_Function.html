@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  首先， 高阶组件 本身不是一个组件，而是一个函数；<br>
+  其次，这个函数的参数是一个组件，返回值也是一个组件；
+  <div id="root"></div>
+  <script type="text/babel">
+  //定义一个基础组件
+  class App  extends React.Component{
+    render()
+    {
+      return (
+        <div>
+           mame:{this.props.name}
+        </div>
+      )
+    }
+  } 
+  //定义一个高阶组件
+  function enhanceComponent(WrappedComponent){
+    class NewComponent extends React.Component{
+      render(){
+        return (
+           <WrappedComponent {...this.props} />
+        )
+      }
+    }
+    return NewComponent;
+  }
+  const EnhanceComponent=enhanceComponent(App);
+  ReactDOM.render(<EnhanceComponent  name='Tom'/>, document.getElementById('root'));
+
+  </script>
+</body>
+</html>
