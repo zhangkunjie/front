@@ -15,22 +15,25 @@
   也内置了一些类型检查的功能。要在组件的 props 上进行类型检查，你只需配置特定的 propTypes 属性：
   <div id="root"></div>
   <script type="text/babel">
-    class MyComponent extends React.Component {
-      render() {
-        // 这必须只有一个元素，否则控制台会打印警告。
-        const children = this.props.children;
-        return (
-          <div>
-            {children}
-          </div>
-        );
-      }
+    function HelloWorldComponent(props) {
+      return (
+        <div>
+          Hello,{props.name} {props.age} {props.gender}
+        </div>
+      )
     }
-    MyComponent.propTypes = {
-      children: PropTypes.element.isRequired
-    };
+    //设置默认值
+    HelloWorldComponent.defaultProps = {
+      gender: '男'
+    }
 
-    ReactDOM.render(<MyComponent><div>1</div><div>2</div></MyComponent>, document.getElementById('root'));
+    //限制属性类型
+    HelloWorldComponent.propTypes = {
+      province: PropTypes.string,
+      age: PropTypes.number
+    }
+
+    ReactDOM.render(<HelloWorldComponent name='Tom' age={21} province='北京市'/>, document.getElementById('root'));
   </script>
 </body>
 
