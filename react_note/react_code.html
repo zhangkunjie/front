@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  要编写一个非受控组件，而不是为每个状态更新都编写数据处理函数，你可以 使用 ref 来从 DOM 节点中获取表单数据。
+  数据获取，设置订阅以及手动更改 React 组件中的 DOM 都属于反作用。有些反作用可能须要清除，因此须要返回一个函数，好比挂载时设置定时器，卸载时取消定时器。函数
   <div id="root"></div>
   <script type="text/babel">
     //class方式实现的定时器
@@ -22,44 +22,41 @@
           counter: 0
         };
       }
-      //组件加载后执行的函数
+      //组件加载后执行的函数,开启定时器
       componentDidMount() {
-        document.title = `组价加载后:你点击了${this.state.counter}次`;
+        this.id=setInterval(()=>
+          {this.setState({counter:this.state.counter+1})},
+          1000);
       }
-      //组件更新后调用的函数
-      componentDidUpdate() {
-        document.title = `组件更新后:你点击了${this.state.counter}次`;
-      }
-      //组件即将卸载时调用的函数
+      //组件即将卸载时去掉定时器
       componentWillUnmount() {
-        document.title = `组件即将卸载:你点击了${this.state.counter}次`;
+        clearInterval(this.id);
       }
       render() {
         return (
           <div>
-            你点击了{this.state.counter} 次
-            <button onClick={() => this.setState({ counter: this.state.counter + 1 })}>点击</button>
+            计数器:{this.state.counter} 次
           </div>
         )
       }
     }
-    //我们看看用fuction+hook怎么实现这个方法
-    //Effect Hook 可以让你在函数组件中执行副作用操作。数据获取，设置订阅以及手动更改 React 组件中的 DOM 都属于副作用。类比于class component，可以把 useEffect Hook 看做 componentDidMount，componentDidUpdate 和 componentWillUnmount 这三个函数的组合。
-    //默认状况下，它在第一次渲染以后和每次更新以后都会执行。你可能会更容易接受 effect 发生在“渲染以后”这种概念，不用再去考虑“挂载”还是“更新”。React 保证了每次运行 effect 的同时，DOM 都已经更新完毕。性能优
+    //hook的实现方式
     function Example2() {
       const [count, setCount] = React.useState(0);
       React.useEffect(() => {
-        // 使用浏览器的 API 更新页面标题
-        document.title = `渲染后执行:你点击了${count}次`
-      });
+      //组件加载后和更新后执行的函数  
+      const id=setInterval(()=>{
+        setCount(count+1);},1000);
+      //组件即将卸载时执行的函数
+      return ()=>{clearInterval(id)};
+      },[]);
       return (
         <div>
-          你点击了{count} 次
-          <button onClick={() => setCount(count + 1)}>点击</button>
+          计时器:{count} 次
         </div>
       )
     }
-    ReactDOM.render(<Example2 />, document.getElementById('root'));
+    ReactDOM.render(<Example2/>, document.getElementById('root'));
   </script>
 </body>
 

@@ -47,15 +47,15 @@
     //Effect Hook 可以让你在函数组件中执行副作用操作。数据获取，设置订阅以及手动更改 React 组件中的 DOM 都属于副作用。类比于class component，可以把 useEffect Hook 看做 componentDidMount，componentDidUpdate 和 componentWillUnmount 这三个函数的组合。
     //默认状况下，它在第一次渲染以后和每次更新以后都会执行。你可能会更容易接受 effect 发生在“渲染以后”这种概念，不用再去考虑“挂载”还是“更新”。React 保证了每次运行 effect 的同时，DOM 都已经更新完毕。性能优
     function Example2() {
-      const [count, setCount] = React.useState(0);
+      const [counter, setCount] = React.useState(0);
       React.useEffect(() => {
         // 使用浏览器的 API 更新页面标题
-        document.title = `渲染后执行:你点击了${count}次`
+        document.title = `渲染后执行:你点击了${counter}次`
       });
       return (
         <div>
-          你点击了{count} 次
-          <button onClick={() => setCount(count + 1)}>点击</button>
+          你点击了{counter} 次
+          <button onClick={() => setCount(counter + 1)}>点击</button>
         </div>
       )
     }

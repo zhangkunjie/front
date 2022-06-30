@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+</head>
+
+<body>
+  要编写一个非受控组件，而不是为每个状态更新都编写数据处理函数，你可以 使用 ref 来从 DOM 节点中获取表单数据。
+  <div id="root"></div>
+  <script type="text/babel">
+  //这个例子用来显示一个计数器。当你点击按钮，计数器的值就会增加：
+  function Example()
+  {
+    const [count,setCount]=React.useState(0);
+    return(
+      <div>
+        你点击了{count} 次
+      <button onClick={()=>setCount(count+1)}>点击</button>
+      </div>
+    )
+  }
+  ReactDOM.render(<Example/>, document.getElementById('root'));
+  </script>
+</body>
+
+</html>
