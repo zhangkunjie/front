@@ -1,0 +1,30 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+  <table border="1" id='app'>
+    <tr>
+      <td>
+        <component-a></component-a>
+      </td>
+    </tr>
+  </table>
+</body>
+<script>
+  //局部组件
+  const componentA = {
+    template: '<h4>{{msg}}</h4>',
+    //局部组件的data必须是一个函数，而且左大括号必须跟在function()后面
+    data: function () {
+      return {
+        msg: '我是局部组件A'
+      }
+    }
+  }
+  const app = Vue.createApp({
+    components: {
+      'component-a': componentA
+    }
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>

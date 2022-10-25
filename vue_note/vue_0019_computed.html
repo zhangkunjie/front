@@ -1,0 +1,61 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          我们为什么需要缓存？假设我们有一个性能开销比较大的计算属性 list，它需要遍历一个巨大的数组并做大量的计算。
+          然后我们可能有其他的计算属性依赖于 list。如果没有缓存，我们将不可避免的多次执行 list 的 getter！
+          如果你不希望有缓存，请用 method 来替代。
+          使用表达式直接计算结果:
+          <p>Has published books:</p>
+          <span>{{ author.books.length > 0 ? 'Yes' : 'No' }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>采用计算过属性的最终结果:<p>{{publishedBooksMessage}}</p>
+        </td>
+      </tr>
+      <tr>
+        <td>采用方法得到最终结果:<p>{{ publishedBooksMessage1() }}</p>
+        </td>
+      </tr>
+    </table>
+    <div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        author: {
+          name: 'Jone Doe',
+          books: [
+            'Vue 2 - Advanced Guide',
+            'Vue 3 - Basic Guide',
+            'Vue 4 - The Mystery'
+          ]
+
+        }
+
+      }
+    },
+    computed: {
+      //计算属性的getter,计算属性是有缓存的
+      publishedBooksMessage() {
+        //this 指向vm 实例
+        return this.author.books.length > 0 ? 'Yes' : 'No'
+      }
+    },
+    methods: {
+      //方法也可以得到计算的结果，但是方法每次都需要重新计算，没有缓存
+      publishedBooksMessage1() {
+        //this 指向vm 实例
+        return this.author.books.length > 0 ? 'Yes' : 'No'
+      }
+    }
+  })
+  app.mount('#app')
+</script>

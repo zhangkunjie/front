@@ -1,0 +1,75 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="template_grammar">
+    <table border="1">
+      <tr>
+        <td>
+          <!-- 完整语法 -->
+          <a v-bind:href='url'>百度</a>
+        </td>
+      </tr>
+      <tr>
+        <!-- 缩写 -->
+        <td>
+          <a :href='url'>百度</a>
+        </td>
+      </tr>
+      <tr>
+        <!-- 动态参数的缩写 -->
+        <td><a :[attributename]='url'>百度</a></td>
+      </tr>
+      <tr>
+        <!-- 动态参数的缩写 -->
+        <td><a :[attributename]='url'>百度</a></td>
+      </tr>
+      <td>
+        <!--
+在 DOM 中使用模板时 (直接在一个 HTML 文件里撰写模板)，还需要避免使用大写字符来命名键名，
+因为浏览器会把 attribute 名全部强制转为小写：   
+在 DOM 中使用模板时这段代码会被转换为 `v-bind:[someattr]`。
+除非在实例中有一个名为“someattr”的 property，否则代码不会工作。-->
+        <a v-bind:[attributeName]="url">百度</a>
+      </td>
+      </tr>
+      <!-- 完整语法 -->
+      <tr>
+        <!-- 动态参数的缩写 -->
+        <td><a v-on:click='showInfo'>点击弹出</a></td>
+      </tr>
+      <tr>
+        <!-- 缩写 -->
+        <td><a @click='showInfo'>点击弹出</a></td>
+      </tr>
+      <tr>
+        <!-- 动态参数的缩写 -->
+        <td><a @[event]='showInfo'>点击弹出</a></td>
+      </tr>
+      <tr>
+
+
+    </table>
+    <div>
+</body>
+<script>
+  // 模板语法-缩写
+  const app = Vue.createApp({
+    data() {
+      return {
+        seen: true,
+        attributename: 'href',
+        url: 'http://www.baidu.com',
+        event: 'click'
+      }
+    },
+    methods: {
+      showInfo() {
+        alert('弹出提示信息')
+      },
+    }
+  })
+  // 绑定app到页面元素上
+  app.mount('#template_grammar')
+</script>

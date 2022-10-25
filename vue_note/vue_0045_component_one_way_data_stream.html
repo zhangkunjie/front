@@ -1,0 +1,73 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <table border="1" id='app'>
+    <tr>
+      <td>
+        所有的 prop 都使得其父子 prop 之间形成了一个单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。
+        这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解。
+        另外，每次父级组件发生变更时，子组件中所有的 prop 都将会刷新为最新的值。
+        这意味着你不应该在一个子组件内部改变 prop。如果你这样做了，Vue 会在浏览器的控制台中发出警告。
+        注意在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，
+        在子组件中改变这个对象或数组本身将会影响到父组件的状态，且 Vue 无法为此向你发出警告。
+        作为一个通用规则，应该避免修改任何 prop，包括对象和数组，因为这种做法无视了单向数据绑定，且可能会导致意料之外的结果
+        这里有两种常见的试图变更一个prop 的情形：
+      </td>
+      <td>
+        一句话:不要在子组件中修改父组件的props
+      </td>
+    </tr>
+    <tr>
+      <td>
+        1、这个 prop 用来传递一个初始值；这个子组件接下来希望将其作为一个本地的 prop 数据来使用。
+        在这种情况下，最好定义一个本地的 data property 并将这个 prop 作为其初始值,
+        然后就可以修改组自定义的数据了
+      </td>
+      <td>
+        Prop 的大小写命名 (camelCase vs kebab-case)
+        在js中:props: ['initialCounter'],,在html中则使用initial-counter
+        <blog-post :initial-counter=10></blog-post>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        2、这个 prop 以一种原始的值传入且需要进行转换。在这种情况下，
+        最好使用这个 prop 的值来定义一个计算属性：
+      </td>
+      <td>
+        initialCounter:是父组件的属性，子组件不能修改，只能使用
+        <blog-post :initial-counter=1 size='ABC'></blog-post>
+      </td>
+    </tr>
+  </table>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        num: 5
+      }
+    }
+  })
+  app.component('blog-post', {
+    props: ['initialCounter', 'size'],
+    data() {
+      return {
+        counter: this.initialCounter,
+      }
+    },
+    computed: {
+      normalizedSize() {
+        return this.size
+      }
+    },
+    template: `
+      <h5>{{counter+1}}</h5>
+      <h5>{{initialCounter+1}}</h5>
+      <h5>{{normalizedSize}} </h5>
+    `
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>

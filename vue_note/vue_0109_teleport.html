@@ -1,0 +1,65 @@
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+  <div id="app" style="position: relative;">
+    <h3>Tooltips with Vue 3 Teleport</h3>
+    <div>
+      Teleport就和多啦A梦的任意门一样，可以穿梭到任何的DOM中的任何地方
+      模态框一直是实际开发中用到比较多的功能之一，在没有各种各样的组件之前，我们需要通过css中的定位对元素进行修饰，有了Teleport，我们就可以这样实现一个简单的模态的组件
+      对话框本来在这里的，通过teleport传送门就传递到了body下面，和这个div成了病并列关系
+      <modal-button></modal-button>
+    </div>
+  </div>
+</body>
+<script>
+const app = Vue.createApp({});
+app.component('modal-button', {
+  template: `
+    <button @click="modalOpen = true">
+        Open full screen modal! (With teleport!)
+    </button>
+
+    <teleport to="body">
+      <div v-if="modalOpen" class="modal">
+        <div>
+          I'm a teleported modal! 
+          (My parent is "body")
+          <button @click="modalOpen = false">
+            Close
+          </button>
+        </div>
+      </div>
+    </teleport>
+  `,
+  data() {
+    return { 
+      modalOpen: false
+    }
+  }
+})
+app.mount('#app')
+</script>
+<style>
+  .modal {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-color: rgba(0,0,0,.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 300px;
+  height: 300px;
+  padding: 5px;
+}
+</style>

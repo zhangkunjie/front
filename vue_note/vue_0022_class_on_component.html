@@ -1,0 +1,46 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          当你在带有单个根元素的自定义组件上使用 class attribute 时，这些 class 将被添加到该元素中。此元素上的现有 class 将不会被覆盖。
+          <my-component class="baz boo"></my-component>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          对于带数据绑定 class 也同样适用：
+          <my-component :class="{ active: isActive }"></my-component>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          如果你的组件有多个根元素，你需要定义哪些部分将接收这个 class。可以使用 $attrs 组件 property 执行此操作：
+          <my-component1 class="baz"></my-component1>
+        </td>
+      </tr>
+    </table>
+    <div>
+</body>
+<script>
+  //class绑定
+  const app = Vue.createApp({
+    data() {
+      return {
+        isActive: true
+      }
+    }
+  })
+  app.component('my-component', {
+    template: `<p class='foo bar'>Hi</p>`
+  })
+  app.component('my-component1', {
+    template: `<p :class='$attrs.class'>Hi</p>
+    <span>This is a child component</span>`
+  })
+  app.mount('#app')
+</script>

@@ -1,0 +1,23 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+  <div id="app">
+    你还可以为 Vue 应用程序全局应用 mixin： 
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({
+  myOption: 'hello!'
+})
+// 为自定义的选项 'myOption' 注入一个处理器。
+app.mixin({
+  created() {
+    const myOption = this.$options.myOption
+    if (myOption) {
+      console.log(myOption)
+    }
+  }
+})
+app.mount('#app') // => "hello!"
+</script>

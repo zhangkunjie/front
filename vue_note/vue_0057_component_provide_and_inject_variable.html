@@ -1,0 +1,58 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div class="container" id='app'>
+    <table border="1">
+      <tr>
+        <td>
+          通常，当我们需要从父组件向子组件传递数据时，我们使用 props。想象一下这样的结构：有一些深度嵌套的组件，而深层的子组件只需要父组件的部分内容。</br>
+          在这种情况下，如果仍然将 prop 沿着组件链逐级传递下去，可能会很麻烦。对于这种情况，我们可以使用一对 provide 和 inject。无论组件层次结构有多深，</br>
+          父组件都可以作为其所有子组件的依赖提供者。这个特性有两个部分：父组件有一个 provide 选项来提供数据，子组件有一个 inject 选项来开始使用这些数据。</br>
+          demo:爷爷组件传递固定属性给孙子组件
+        </td>
+        <td>
+          <parent></parent>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({})
+  //父组件
+  app.component('parent', {
+    template: `
+    <div>
+      <child></child>
+    </div>
+   `,
+    provide: {
+      name: '张三'
+    }
+  })
+  //孩子组件
+  app.component('child', {
+    template: `
+    <div>
+      <grandson></grandson>
+    </div>
+   `,
+    provide: {
+      age: 21
+    }
+  })
+  //孙子组件
+  app.component('grandson', {
+    inject: ['name','age'],
+    created() {
+      console.log(`从爷爷组件中获取的变量:${this.name}`)
+    },
+    template: `
+    <h5>从爷爷组件中获取的变量name:----{{name}}</h5>
+    <h5>从爸爸组件中获取的变量age:----{{age}}</h5>
+   `
+  })
+  app.mount('#app')
+</script>

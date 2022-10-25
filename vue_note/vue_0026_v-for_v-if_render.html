@@ -1,0 +1,105 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>列表渲染-v-for和v-if</td>
+      </tr>
+      <tr>
+        <td>
+          Vue 将被侦听的数组的变更方法进行了包裹，所以它们也将会触发视图更新。这些被包裹过的方法包括：
+          push()
+          pop()
+          shift()
+          unshift()
+          splice()
+          sort()
+          reverse()    
+        </td>
+         </tr>
+         <tr>
+           <td>
+            替换数组:变更方法，顾名思义，会变更调用了这些方法的原始数组。相比之下，也有非变更方法，
+            例如 filter()、concat() 和 slice()。它们不会变更原始数组，而总是返回一个新数组。
+            当使用非变更方法时，可以用新数组替换旧数组：
+            push方法给items增加元素:
+            <li v-for='item in items'>
+              {{item.message}}
+            </li>
+           </td>
+          </tr>
+          <tr>
+            <td>
+              filter:过滤数组，留下偶数
+             <li v-for='n in evenNumbers' :key='n'>
+               {{n}}
+             </li>
+            </td>
+           </tr>
+           <tr>
+            <td>
+              在计算属性不适用的情况下 (例如，在嵌套的 v-for 循环中) 你可以使用一个方法：
+              <ul v-for="numbers in sets">
+                <li v-for="n in even(numbers)" :key="n">{{ n }}</li>
+              </ul>
+            </td>
+           </tr>
+           <tr>
+            <td>
+              v-for 也可以接受整数。在这种情况下，它会把模板重复对应次数
+              <span v-for='n in 10 ' :key='n'>{{n}} </span>
+            </td>
+           </tr>
+           <tr>
+            <td>
+              在 'template' 中使用 v-for
+              <template v-for='item in items' :key='item.message'>
+                 <li>{{item.message}}</li>
+              </template>
+            </td>
+           </tr>
+           <tr>
+            <td>
+              注意我们不推荐在同一元素上使用 v-if 和 v-for
+              <template v-for='n in numbers' :key='n'>
+                 <li v-if='n % 2==0'>{{n}}</li>
+              </template>
+            </td>
+           </tr>
+    </table>
+    <div>
+</body>
+<script>
+  //class绑定
+  const app = Vue.createApp({
+    data() {
+      return {
+        items: [{ message: 'Bar'}, { message: 'Foo'}],
+        numbers:[1,2,3,4,5],
+        sets:[[1,2,3,4,5],[6,7,8,9,10]]
+      }
+    },
+    //计算属性:取数组中的偶数
+    computed:
+    {
+      //计算属性，获取偶数
+      evenNumbers()
+      {
+        return this.numbers.filter(number=>number%2==0)
+      }
+    },
+    methods:{
+      even(numbers)
+      {
+        return this.numbers.filter(number=>number%2==0)
+      }  
+    }
+  })
+  //this.data.items.push({message:'Baz'}) this指向的是window窗口，并不指向vue实例对象,所以这种写法得不到data
+  //app.items.push({message:'Baz'})
+  const vm = app.mount('#app') //mount方法返回根组件实例
+  vm.items.push({message: 'Baz'}) //修改数组内容，增加Baz元素
+</script>

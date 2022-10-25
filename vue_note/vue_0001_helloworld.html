@@ -1,0 +1,19 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+<body>
+  <div id="counter">
+    Counter: {{ counter }}
+  </div>
+</body>
+<script>
+  const Counter = {
+    data() {
+      return {
+        counter: 1
+      }
+    }
+  }
+  Vue.createApp(Counter).mount('#counter')
+</script>
+<!--vue:类似js的前端框架，操作数据的方式变了-->

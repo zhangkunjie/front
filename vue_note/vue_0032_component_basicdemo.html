@@ -1,0 +1,59 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          因为组件是可复用的实例，所以它们与根实例接收相同的选项，
+          例如 data、computed、watch、methods 以及生命周期钩子等。
+        </td>
+        <td>
+          <button-counter></button-counter>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          组件可以任意复用
+        </td>
+        <td>
+          <button-counter></button-counter>
+          <button-counter></button-counter>
+          <button-counter></button-counter>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          组件注册:全局注册和局部注册
+        </td>
+        <td>
+          这种方式是全局注册
+          const app = Vue.createApp({})
+          app.component('my-component-name', {
+          // ... 选项 ...
+          })
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  //组件基本示例
+  const app = Vue.createApp({})
+  app.component('button-counter', {
+    data() {
+      return {
+        count: 0
+      }
+    },
+    //文本模板组件
+    template: `
+    <button  @click='count++'>
+      你点击了我{{count}} 次
+    </button>
+    `
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>

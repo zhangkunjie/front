@@ -1,0 +1,82 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          父级组件可以像处理原生 DOM 事件一样通过 v-on 或 @ 监听子组件实例的任意事件：
+        </td>
+        <td>
+          静态props:
+          <blog-post-demo title="计算机网络"></blog-post-demo>
+          <blog-post-demo title="操作系统"></blog-post-demo>
+          <blog-post-demo title="数据结构"></blog-post-demo>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          动态props:使用父组件的data数据
+        </td>
+        <td>
+          <div :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post-demo @enlarge-text="onEnlargeText" v-for='post in  posts' :key='post.id' :title='post.title'>
+            </blog-post-demo>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          组件注册:全局注册和局部注册
+        </td>
+        <td>
+          这种方式是全局注册
+          const app = Vue.createApp({})
+          app.component('my-component-name', {
+          // ... 选项 ...
+          })
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  //组件基本示例
+  const app = Vue.createApp({
+    data() {
+      return {
+        posts: [{
+            id: 1,
+            title: '计算机网络'
+          },
+          {
+            id: 2,
+            title: '操作系统'
+          },
+          {
+            id: 3,
+            title: '数据结构'
+          }
+        ],
+        postFontSize: 1
+      }
+    },
+    methods: {
+      //被组件调用的方法
+      onEnlargeText(enlargeAmount) {
+        this.postFontSize += enlargeAmount
+      }
+
+    }
+  })
+  app.component('blog-post-demo', {
+    //通过props向组件传递数据
+    props: ['title'],
+    emits: ['enlargeText'],
+    //$emit('enlargeText',1):指明组件单击事件绑定的方法和参数
+    template: `<h4>{{title}}</h4><button @click="$emit('enlargeText',1)">Enlarge text</button>`
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>

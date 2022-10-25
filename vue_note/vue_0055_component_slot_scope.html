@@ -1,0 +1,35 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div class="container" id='app'>
+    <todo-list>
+      <template v-slot:iname="slotProps">
+        <span class="green">{{ slotProps.item }}</span>
+      </template>
+      <template v-slot:other="otherSlotProps">
+        只要出现多个插槽，请始终为所有的插槽使用完整的基于template 的语法：绑定name
+      </template>
+    </todo-list>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({})
+  app.component('todo-list', {
+    data() {
+      return {
+        items: ['喂猫', '买牛奶', '做饭']
+      }
+    },
+    template: `
+    <ul>
+       <li v-for="(item,index) in items">
+        <slot name="iname" :item="item" :index="index" :another-attribute="anotherAttribute"></slot>
+      </li> 
+    </ul>
+    <slot name="other"></slot>
+   `
+  })
+  app.mount('#app')
+</script>

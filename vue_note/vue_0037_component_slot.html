@@ -1,0 +1,29 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <table border="1">
+    <tr>
+      <td>
+        <div id="app">
+          slot:占位符，作为我们想要插入内容的占位符
+          <alert-box>Something bad happened.</alert-box>
+        </div>
+      </td>
+    </tr>
+  </table>
+</body>
+<script>
+  //组件基本示例
+  const app = Vue.createApp({})
+  app.component('alert-box', {
+    template: `
+      <div>
+      <strong>Error!</strong>
+      <slot></slot>
+      </div> 
+    `
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>

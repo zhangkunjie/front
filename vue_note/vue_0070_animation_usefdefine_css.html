@@ -1,0 +1,44 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css"
+  rel="stylesheet"
+  type="text/css"
+/>
+</head>
+
+<body>
+  <div id="app">
+    你也可以分别指定进入和离开的持续时间：
+    transition :duration="{ enter: 500, leave: 800 }">...transition
+    我们可以通过以下 attribute 来自定义过渡类名：</br>
+    enter-from-class
+    enter-active-class
+    enter-to-class
+    leave-from-class
+    leave-active-class
+    leave-to-class
+它们的优先级高于普通的类名，当你希望将其它第三方 CSS 动画库与 Vue 的过度系统相结合时十分有用，比如 Animate.css</br>
+。
+    <button @click='show=!show'>
+      Toggle
+    </button>
+    <transition
+    name="custom-classes-transition"
+    enter-active-class="animate__animated animate__tada"
+    leave-active-class="animate__animated animate__bounceOutRight"
+  >
+      <p v-if='show'>12345</p>
+    </transition>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        show: true
+      }
+    },
+  })
+  app.mount('#app')
+</script>

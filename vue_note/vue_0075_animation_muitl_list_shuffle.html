@@ -1,0 +1,37 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+</head>
+
+<body>
+  列表洗牌
+  <div id="app">
+    <button @click="shuffle">Shuffle</button>
+    <transition-group name="flip-list" tag="ul">
+      <li v-for="item in items" :key="item">
+        {{ item }}
+      </li>
+    </transition-group>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        nextNum: 10
+      }
+    },
+    methods: {
+      shuffle() {
+        this.items = _.shuffle(this.items)
+      }
+    }
+  })
+  app.mount('#app')
+</script>
+<style>
+  .flip-list-move {
+    transition: transform 0.8s ease;
+  }
+</style>

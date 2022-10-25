@@ -1,0 +1,60 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <table border="1" id='app'>
+    <tr>
+      <td>
+        当我们学习表单输入绑定时，我们看到 v-model 有内置修饰符——.trim、.number 和 .lazy。但是，
+        在某些情况下，你可能还需要添加自己的自定义修饰符。让我们创建一个示例自定义修饰符 capitalize，
+        它将 v-model 绑定提供的字符串的第一个字母大写。添加到组件 v-model 的修饰符将通过 modelModifiers prop
+        提供给组件。在下面的示例中，我们创建了一个组件，其中包含默认为空对象的 modelModifiers prop。
+        请注意，当组件的 created 生命周期钩子触发时，modelModifiers prop 会包含 capitalize，
+        且其值为 true——因为 capitalize 被设置在了写为 v-model.capitalize="myText" 的 v-model 绑定上。
+      </td>
+      <td>
+        <my-component v-model.capitalize="myText"></my-component>
+        {{myText}}
+      </td>
+    </tr>
+  </table>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        myText: 'abc'
+      }
+    }
+  })
+  app.component('my-component', {
+    props: {
+      modelValue: String,
+      modelModifiers: {
+        default: () => ({})
+      }
+    },
+    emits: ['update:modelValue'],
+    methods: {
+      emitValue(e) {
+        let value = e.target.value
+        if (this.modelModifiers.capitalize) {
+          value = value.charAt(0).toUpperCase() + value.slice(1)
+        }
+        this.$emit('update:modelValue', value)
+
+      }
+    },
+    template: `
+     <input 
+       type="text"
+       :value="modelValue"
+       @input="emitValue">
+   `,
+    created() {
+      console.log(this.modelModifiers)
+    }
+  })
+  app.mount('#app')
+</script>

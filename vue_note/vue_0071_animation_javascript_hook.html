@@ -1,0 +1,127 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.4/gsap.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    可以在 attribute 中声明 JavaScript 钩子：
+    &lt;transition
+    @before-enter="beforeEnter"
+    @enter="enter"
+    @after-enter="afterEnter"
+    @enter-cancelled="enterCancelled"
+    @before-leave="beforeLeave"
+    @leave="leave"
+    @after-leave="afterLeave"
+    @leave-cancelled="leaveCancelled"
+    :css="false"
+    &gt;
+    // ...
+    methods: {
+    // --------
+    // 进入时
+    // --------
+
+    beforeEnter(el) {
+    // ...
+    },
+    // 当与 CSS 结合使用时
+    // 回调函数 done 是可选的
+    enter(el, done) {
+    // ...
+    done()
+    },
+    afterEnter(el) {
+    // ...
+    },
+    enterCancelled(el) {
+    // ...
+    },
+
+    // --------
+    // 离开时
+    // --------
+
+    beforeLeave(el) {
+    // ...
+    },
+    // 当与 CSS 结合使用时
+    // 回调函数 done 是可选的
+    leave(el, done) {
+    // ...
+    done()
+    },
+    afterLeave(el) {
+    // ...
+    },
+    // leaveCancelled 只用于 v-show 中
+    leaveCancelled(el) {
+    // ...
+    }
+    }
+
+    这些钩子函数可以结合 CSS transitions/animations 使用，也可以单独使用。
+    当只用 JavaScript 过渡的时候，在 enter 和 leave 钩子中必须使用 done 进行回调。否则，它们将被同步调用，过渡会立即完成。添加 :css="false" 也会让 Vue 会跳过 CSS
+    的检测，除了性能略高之外，这也可以避免过渡过程中受到 CSS 规则的意外影响。
+    现在让我们来看一个例子。下面是一个使用 GreenSock
+    的 JavaScript 过渡:
+    <!-- ... -->
+    </transition>
+    <button @click='show=!show'>
+      Toggle
+    </button>
+    <transition 
+    @before-enter="beforeEnter"
+    @enter="enter"
+    @leave="leave"
+    :css="false"
+    >
+      <p v-if='show'>12345</p>
+    </transition>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        show: false
+      }
+    },
+    methods: {
+    beforeEnter(el) {
+      gsap.set(el, {
+        scaleX: 0.8,
+        scaleY: 1.2
+      })
+    },
+    enter(el, done) {
+      gsap.to(el, {
+        duration: 1,
+        scaleX: 1.5,
+        scaleY: 0.7,
+        opacity: 1,
+        x: 150,
+        ease: 'elastic.inOut(2.5, 1)',
+        onComplete: done
+      })
+    },
+    leave(el, done) {
+      gsap.to(el, {
+        duration: 0.7,
+        scaleX: 1,
+        scaleY: 1,
+        x: 300,
+        ease: 'elastic.inOut(2.5, 1)'
+      })
+      gsap.to(el, {
+        duration: 0.2,
+        delay: 0.5,
+        opacity: 0,
+        onComplete: done
+      })
+    }
+  }
+  })
+  app.mount('#app')
+</script>

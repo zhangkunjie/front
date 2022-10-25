@@ -1,0 +1,19 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    自定义指令v-px:设置字体大小
+    <p v-px='20'>123</p>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({})
+  app.directive('px', {
+    mounted(el, binding) {
+      el.style.fontSize = binding.value + 'px'
+    }
+  })
+  app.mount('#app')
+</script>

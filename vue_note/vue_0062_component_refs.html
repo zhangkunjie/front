@@ -1,0 +1,27 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div class='demo' id='app'>
+    尽管存在 prop 和事件，但有时你可能仍然需要在 JavaScript 中直接访问子组件。</br>
+    为此，可以使用 ref attribute 为子组件或 HTML 元素指定引用 ID。例如：
+    <base-input/>
+    </div>
+</body>
+<script>
+  const app = Vue.createApp({})
+  app.component('base-input', {
+    template: `<input  ref="input"/>`,
+    methods: {
+      focusInput() {
+        this.$refs.input.focus()
+      }
+    },
+    mounted() {
+      this.focusInput()
+    }
+  })
+
+  app.mount('#app')
+</script>

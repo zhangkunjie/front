@@ -1,0 +1,63 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div class="container" id='app'>
+    <table border="1">
+      <tr>
+        <td>
+          如果我们更改了 todos 的列表，这个变化并不会反映在 inject 的 todoLength property 中。
+          这是因为默认情况下，provide/inject 绑定并不是响应式的,我们需要为 provide 的 todoLength 分配一个组合式 API computed property
+        </td>
+        <td>
+          <parent></parent>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  const app = Vue.createApp({})
+  //父组件
+  app.component('parent', {
+    data() {
+      return {
+        todos: ['吃饭', '睡觉', '打豆豆']
+      }
+    },
+    template: `
+    <div>
+      <child></child>
+    </div>
+   `,
+    provide() {
+      return {
+        todosLength: Vue.computed(() => this.todos.length)
+      }
+      //todosLength: this.todos.length 这里会报错
+    }
+  })
+  //孩子组件
+  app.component('child', {
+    template: `
+    <div>
+      <grandson></grandson>
+    </div>
+   `,
+    provide: {
+      age: 21
+    }
+  })
+  //孙子组件
+  app.component('grandson', {
+    inject: ['todosLength'],
+    created() {
+      console.log(`从爷爷组件中获取的变量:${this.todosLength}`)
+    },
+    template: `
+    <h5>从爷爷组件中获取的变量todosLength:{{todosLength}}</h5>
+   `
+  })
+  app.mount('#app')
+</script>

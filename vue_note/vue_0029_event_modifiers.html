@@ -1,0 +1,113 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <table border="1">
+      <tr>
+        <td>
+          stop:阻止单击事件继续冒泡
+        </td>
+        <td>
+          <div @click='show(123)'>弹出123
+            <div @click.stop='show(456)'>只弹出456</div>
+            <div @click='show(456)'>只弹出456,123</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          prevent:提交页面不刷新
+        </td>
+        <td>
+          <form @submit.prevent='onSubmit()'>
+            <button @submit='onSubmit()'>提交不刷新页面</button>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          修饰符可以串联
+        </td>
+        <td @click="show(101112)">
+          <a @click.stop.prevent="show(789)">阻止父单元格弹出消息并且阻止提交</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          @submit.prevent只有修饰符
+        </td>
+        <td>
+          <form @submit.prevent>
+            <button @submit='onSubmit()'>提交不刷新页面</button>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          capture:添加事件监听器时使用事件捕获模式，即内部元素触发的事件先在此处理，然后才交由内部元素进行处理
+        </td>
+        <td>
+          <div @click.capture="show(123)">
+            <div @click='show(456)'>点击456的时候回先弹出123，然后再弹出456
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          self:只当在 event.target 是当前元素自身时触发处理函数,即事件不是从内部元素触发的
+          下面例子，如果不用self则先弹出456，然后会弹出123
+        </td>
+        <td>
+          <div @click.selef="show(123)">123
+            <div @click='show(456)'>点击456的时候只会弹出456，不会弹出123
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          once:事件只会触发一次
+        </td>
+        <td>
+          <div @click="show(123)">123
+            <div @click.once='show(456)'>点击456,第一次会弹出456，123，第二次只弹出123
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          passive:滚动事件的默认行为 (即滚动行为) 将会立即触发
+        </td>
+        <td>
+          <div @scroll.passive="show('滚动事件除法')">
+            123</br>
+            456</br>
+            789</br>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  //事件修饰符
+  const app = Vue.createApp({
+    data() {
+      return {
+        counter: 0,
+        name: 'Vue.js'
+      }
+    },
+    methods: {
+      show(messsge) {
+        alert(messsge)
+      },
+      onSubmit() {}
+    }
+  })
+  const vm = app.mount('#app') //mount方法返回根组件实例
+</script>

@@ -1,0 +1,33 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="app">
+    <anchored-heading :level='2' >a</anchored-heading>
+  </div>
+  </div>
+</body>
+<script>
+  const {
+    createApp,
+    h
+  } = Vue
+  const app = createApp({})
+  app.component('anchored-heading', {
+    render() {
+      return h(
+        'h' + this.level, 
+        {},
+        this.$slots.default()
+      )
+    },
+    props: {
+      level: {
+        type: Number,
+        required: true
+      }
+    }
+  })
+  app.mount('#app')
+</script>

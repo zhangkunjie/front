@@ -1,0 +1,25 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+</head>
+
+<body>
+  <div id="before_create">
+    <div>
+</body>
+<script>
+  //vue生命周期
+  //创建app，传输数据参数
+  const app = Vue.createApp({
+    data() {
+      return {
+        count: 1
+      }
+    },
+    created() {
+      console.log('coun is ' + this.count);
+    }
+  })
+
+  // 绑定app到页面元素上
+  app.mount('#before_create')
+</script>
