@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  在 React 中另一个不同点是你不能通过返回 false 的方式阻止默认行为。你必须显式的使用 preventDefault.<br>
+  <div id="form"></div>
+  <script type="text/babel">
+    //传统阻止默认行为方式，return false
+    //<form onsubmit="console.log('You clicked submit.'); return false">
+    //<button type="submit">Submit</button>
+    //</form>  
+    function Form() {
+      function handleSubmit(e) {
+        e.preventDefault();
+        console.log('You clicked submit.')
+      }
+      return (
+        <form onSubmit={handleSubmit}>
+          <button type='submit'>Submit</button>
+        </form>
+      )
+    }
+    ReactDOM.render(<Form />, document.getElementById('form'));
+  </script>
+</body>
+
+</html>

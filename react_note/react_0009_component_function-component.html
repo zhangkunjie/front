@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  定义组件最简单的方式就是编写 JavaScript 函数：
+  该函数是一个有效的 React 组件，因为它接收唯一带有数据的 “props”（代表属性）对象与并返回一个 React 元素。这类组件被称为“函数组件”，因为它本质上就是 JavaScript 函数。
+  <div id="root"></div>
+  <script type="text/babel">
+  function Welcome(props)
+  {
+    return <h1>Hello,{props.name}</h1>;
+  }
+  const element=<Welcome name='Sara'/>
+  ReactDOM.render(element,document.getElementById('root'))
+  </script>
+</body>
+
+</html>

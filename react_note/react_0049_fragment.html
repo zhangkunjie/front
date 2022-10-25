@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  React 中的一个常见模式是一个组件返回多个元素。Fragments 允许你将子列表分组，而无需向 DOM 添加额外节点。
+  <div id="root"></div>
+  <script type="text/babel">
+    //Fragment组合多个元素
+    class Columns extends React.Component {
+      render() {
+        return (
+          <React.Fragment>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+          </React.Fragment>
+        )
+      }
+    }
+    //Fragment组合遍历数组后的元素
+    class Columns2 extends React.Component {
+      render() {
+        const data = [6, 7, 8, 9, 10];
+        return (
+          data.map(item => (
+            <React.Fragment key={item}>
+              <td>{item}</td>
+            </React.Fragment>
+          ))
+        )
+      }
+    }
+    class Table extends React.Component {
+      render() {
+        return (
+          <table border='1'>
+            <tbody>
+              <tr><Columns /></tr>
+              <tr><Columns2 /></tr>
+            </tbody>
+          </table>
+        )
+      }
+    }
+
+    ReactDOM.render(<Table />, document.getElementById('root'));
+
+  </script>
+</body>
+
+</html>

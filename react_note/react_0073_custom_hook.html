@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+</head>
+<body>
+  hook就是一个函数,有一些特定逻辑的封装函数
+1,用于处理字符串(url)
+2,数据格式化(日期)
+3,业务逻辑性
+ 自定义hook相对于普通js复用逻辑的抽离,然后可以在页面调用
+ 自定义hook一般放在src下面hooks文件夹里面
+ 自定义 Hook 是一个函数，其名称以 “use” 开头，函数内部可以调用其他的 Hook。
+  <div id="root"></div>
+  <script type="text/babel">
+  //自定义hook1:解析学生信息的名字
+  function useNameHandler(studentInfo){
+    const {name}=studentInfo;
+    return name;
+  }
+  function CustomHook1(){
+     const nameObj=useNameHandler({'name':'张三','age':21});
+     const[name]=React.useState(nameObj);
+     return(
+      <div>
+        姓名解析后是:{name}
+      </div>
+     )
+  }
+  //自定义hook2:日期处理
+  function useTimeHandler(date,type='/'){
+     const d = new Date(date)
+     const arr = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
+     return d.getFullYear() + type + useNumber(d.getMonth() + 1) + type + useNumber(d.getDate()) + ' ' + arr[d.getDay()]
+  }
+  function useNumber(n){
+    if(isNaN(n)) return 'n格式不正确'
+    if(n<10) return '0' + n
+      return n
+  }
+  function CustomHook2(){
+    const t = useTimeHandler(Date.now(),'-');
+    const [time] = React.useState(t);
+    return (
+      <div>
+        当前日期是:{time}
+      </div>
+    )
+  }
+
+
+  ReactDOM.render(<CustomHook2/>, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

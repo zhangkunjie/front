@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  高阶组件共享Context：
+  <div id="root"></div>
+  <script type="text/babel">
+    //定义context
+    const UserContext = React.createContext(
+      {
+        nickname: '默认',
+        level: -1,
+        region: '中国'
+      }
+    )
+    //定义高阶组件
+    function withUser(WrappendComponent) {
+      return function (props) {
+        return (
+          <UserContext.Consumer>
+            {
+              user => {
+                return <WrappendComponent {...props} {...user} />
+              }
+            }
+          </UserContext.Consumer>
+        )
+      }
+    }
+    class Home extends React.Component {
+      render() {
+        return (
+          <h5>Home {`昵称:${this.props.nickname} 等级:${this.props.level} 区域:${this.props.region}`}</h5>
+        )
+      }
+    }
+    class About extends React.Component {
+      render() {
+        return (
+          <h5>Home {`昵称:${this.props.nickname} 等级:${this.props.level} 区域:${this.props.region}`}</h5>
+        )
+      }
+    }
+    const UserHome = withUser(Home);
+    const UserAbout = withUser(About);
+    class App extends React.Component {
+      render() {
+        return (
+          <div>
+            app
+            <UserContext.Provider value={{ nickname: 'zep', level: 50, region: '深圳' }}>
+              <UserHome />
+              <UserAbout />
+            </UserContext.Provider>
+          </div>
+
+        )
+      }
+    }
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

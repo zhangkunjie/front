@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  当需要处理多个 input 元素时，我们可以给每个元素添加 name 属性，并让处理函数根据 event.target.name 的值选择要执行的操作。 <div id="root"></div>
+ <script type="text/babel">
+  class Reservation extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { 
+        isGoing: true ,
+        numberOfGuests: 2
+      };
+      this.hanldeInputChange = this.hanldeInputChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    hanldeInputChange(event) {
+      const target=event.target;
+      //根据input组件的名称来设置组件的值
+      const value=target.name==='isGoing'?target.checked:target.value;
+      const name=target.name;
+      this.setState({ [name]: value }); //这里使用了 ES6 计算属性名称的语法更新给定输入名称对应的 state 值
+    }
+    handleSubmit(event) {
+      alert('你选择的值是:' + this.state.isGoing+'-'+this.state.numberOfGuests);
+      event.preventDefault();
+    }
+    render() {
+      return (
+        <form onSubmit={this.handleSubmit}>
+        <label>参与</label>
+        <input name="isGoing" type="checkbox" checked={this.state.isGoing}  onChange={this.hanldeInputChange} /><br/>
+        <label >来宾人数</label>
+        <input name="numberOfGuests"  type="number"  value={this.state.numberOfGuests} onChange={this.hanldeInputChange}/>
+        <input name='按钮' type="submit" value="提交" />
+       </form> 
+      )
+    };
+  }
+  ReactDOM.render(<Reservation />, document.getElementById('root'));
+</script>
+</body>
+
+</html>

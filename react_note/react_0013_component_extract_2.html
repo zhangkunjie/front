@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  该组件用于描述一个社交媒体网站上的评论功能，它接收 author（对象），text （字符串）以及 date（日期）作为 props。
+  </br>
+  React非常灵活，但它也有一个严格的规则：
+  所有 React 组件都必须像纯函数一样保护它们的 props 不被更改。
+  <div id="root"></div>
+  <script type="text/babel">
+    //首先，我们将提取 Avatar 组件
+    function Avatar(props) {
+      return (
+        <img className="Avatar"
+          src={props.user.avatarUrl}
+          alt={props.user.name} />
+      );
+    }
+    //接下来，我们将提取 UserInfo 组件，该组件在用户名旁渲染 Avatar 组件：
+    function UserInfo(props) {
+      return (
+        <div className="UserInfo">
+          <Avatar user={props.user} />
+          <div className="UserInfo-name">
+            {props.user.name}
+          </div>
+        </div>
+      );
+    }
+    //进一步，简化comment
+    function Comment(props) {
+      return (
+        <div className="Comment">
+          <UserInfo user={props.author} />
+          <div className="Comment-text">
+            {props.text}
+          </div>
+          <div className="Comment-date">
+            {props.date}
+          </div>
+        </div>
+      );
+    }
+    const author =
+    {
+      avatarUrl: "https://img3.doubanio.com/f/movie/d59b2715fdea4968a450ee5f6c95c7d7a2030065/pics/movie/apple-touch-icon.png",
+      name: "电影"
+    }
+    const text = "豆瓣电影评论内容"
+    const date = '2022-04-13 11:00:00'
+    const element = <Comment author={author} text={text} date={date} />
+    ReactDOM.render(element, document.getElementById('root'))
+  </script>
+</body>
+
+</html>

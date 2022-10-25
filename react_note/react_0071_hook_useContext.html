@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+</head>
+
+<body>
+  如果需要在组件之间共享状态，可以使用useContext()。
+  现在有俩个组件Navbar和Messages，我们希望它们之间共享状态
+  <div id="root"></div>
+  <script type="text/babel">
+    const TestContext = React.createContext({});
+    //组件1
+    const NavBar = () => {
+      //从context中获取username的姓名
+      const { username } = React.useContext(TestContext)
+      return (
+        <div className="navbar">
+          <p>{username}</p>
+        </div>
+      )
+    }
+    //组件2
+    const Messages = () => {
+      //从context中获取username的姓名
+      const { username } = React.useContext(TestContext)
+      return (
+        <div className="messages">
+          <p>1 message for {username}</p>
+        </div>
+      )
+      }
+      
+      //公共父组件
+      function App() {
+        return (
+          <TestContext.Provider
+            value={{ username: 'Tom' }}
+          >
+            <div>
+              <NavBar />
+              <Messages />
+            </div>
+          </TestContext.Provider>
+        )   
+  }
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

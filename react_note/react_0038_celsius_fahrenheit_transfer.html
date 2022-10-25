@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  在 React 应用中，任何可变数据应当只有一个相对应的唯一“数据源”。通常，state 都是首先添加到需要渲染数据的组件中去。然后，如果其他组件也需要这个 state，那么你可以将它提升至这些组件的最近共同父组件中。你应当依靠自上而下的数据流，而不是尝试在不同组件间同步 state。
+虽然提升 state 方式比双向绑定方式需要编写更多的“样板”代码，但带来的好处是，排查和隔离 bug 所需的工作量将会变少。由于“存在”于组件中的任何 state，仅有组件自己能够修改它，因此 bug 的排查范围被大大缩减了。此外，你也可以使用自定义逻辑来拒绝或转换用户的输入。
+如果某些数据可以由 props 或 state 推导得出，那么它就不应该存在于 state 中。举个例子，本例中我们没有将 celsiusValue 和 fahrenheitValue 一起保存，而是仅保存了最后修改的 temperature 和它的 scale。这是因为另一个输入框的温度值始终可以通过这两个值以及组件的 render() 方法获得。这使得我们能够清除输入框内容，亦或是，在不损失用户操作的输入框内数值精度的前提下对另一个输入框内的转换数值做四舍五入的操作。
+当你在 UI 中发现错误时，可以使用 React 开发者工具 来检查问题组件的 props，并且按照组件树结构逐级向上搜寻，直到定位到负责更新 state 的那个组件。这使得你能够追踪到产生 bug 的源头：
+  <div id="root"></div>
+  <script type="text/babel">
+    // 摄氏温度和华氏温度的相互转换
+    function toCelsius(fahrenheit) {
+      return (fahrenheit - 32) * 5 / 9;
+    }
+    function toFahrenheit(celsius) {
+      return (celsius * 9 / 5) + 32;
+    }
+    const scaleNames = {
+      c: 'Celsius',
+      f: 'Fahrenheit'
+    }
+    //温度输入数字转换，输入字符串返回空，输入数字返回保留三位小数的的数字  
+    function tryConvert(temperature, convert) {
+      const input = parseFloat(temperature);
+      if (Number.isNaN(input)) {
+        return '';
+      }
+      const output = convert(input);
+      const rounded = Math.round(output * 1000) / 1000;
+      return rounded.toString();
+    }
+
+    class TemperatureInput extends React.Component {
+      constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.state = { temperature: '' };
+      }
+      handleChange(e) {
+        //this.setState({ temperature: e.target.value });
+        this.props.onTemperatureChange(e.target.value);
+      }
+      render() {
+        const temperature = this.props.temperature;
+        const scale = this.props.scale;
+        return (
+          <fieldset>
+            <legend>输入:{scaleNames[scale]}:单位水温</legend>
+            <input type="text" value={temperature} onChange={this.handleChange} />
+          </fieldset>
+        );
+      }
+    }
+    class Calculator extends React.Component {
+      constructor(props) {
+        super(props);
+        this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+        this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+        this.state = { temperature: '', scale: 'c' };
+      }
+
+      handleCelsiusChange(temperature) {
+        this.setState({ scale: 'c', temperature });
+      }
+
+      handleFahrenheitChange(temperature) {
+        this.setState({ scale: 'f', temperature });
+      }
+
+      render() {
+        const scale = this.state.scale; 
+        const temperature = this.state.temperature; 
+        const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature; 
+        const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+        return (
+          <div>
+            <TemperatureInput
+              scale="c"
+              temperature={celsius} onTemperatureChange={this.handleCelsiusChange} />       
+          <TemperatureInput
+              scale="f"
+              temperature={fahrenheit} onTemperatureChange={this.handleFahrenheitChange} />      
+          </div>
+        );
+      }
+    }
+    ReactDOM.render(<Calculator />, document.getElementById('root'));
+  </script>
+</body>
+</html>

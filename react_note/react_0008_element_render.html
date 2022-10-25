@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  React 元素是不可变对象。一旦被创建，你就无法更改它的子元素或者属性。一个元素就像电影的单帧：它代表了某个特定时刻的 UI。
+  </br>根据我们已有的知识，更新 UI 唯一的方式是创建一个全新的元素，并将其传入 ReactDOM.render()。
+  <div id="root"></div>
+  <script type="text/babel">
+  function tick(){
+    //element元素就是不可变对象
+    const element=(
+        <div> 
+        <h1>Hello,world</h1>
+        <h2>It is {new Date().toLocaleTimeString()}</h2>
+        </div>
+    );
+    ReactDOM.render(element,document.getElementById('root'))
+  }
+  //每隔1秒执行一次
+  setInterval(tick,1000)
+  </script>
+</body>
+</html>

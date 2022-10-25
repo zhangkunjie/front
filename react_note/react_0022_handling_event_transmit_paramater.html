@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  在循环中，通常我们会为事件处理函数传递额外的参数。例如，若 id 是你要删除那一行的 ID，以下两种方式都可以向事件处理函数传递参数： <br>
+  &lt;button onClick={(e) =&gt; this.deleteRow(id, e)}&gt;Delete Row&lt;/button&gt;<br>
+  &lt;button onClick={this.deleteRow.bind(this, id)}&gt;Delete Row&lt;/button&gt;
+  通过 bind 方式向监听函数传参，在类组件中定义的监听函数，事件对象 e 要排在所传递参数的最后面，且第一个实参必须要写this
+  <div id="root"></div>
+  <script type="text/babel">
+    class DeleteButton extends React.Component {
+      changeOne = (e, title) => {
+        console.log(title)//回调形式
+      }
+      changeTwo = (title, e) => {
+        console.log(title) //bind()形式
+      }
+      render() {
+        return (
+          <div>
+            <button onClick={(e) => this.changeOne(e, '回调形式')}>箭头函数</button>
+            <button onClick={this.changeTwo.bind(this, 'bind形式')}>箭头函数</button>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<DeleteButton />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

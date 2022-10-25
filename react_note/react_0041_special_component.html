@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  有些时候，我们会把一些组件看作是其他组件的特殊实例，比如 WelcomeDialog 可以说是 Dialog 的特殊实例。
+  <div id="root"></div>
+  <script type="text/babel">
+    function  Dialog(props) {
+      return (
+        <div>
+         <h1 className='Dialog-title'>
+            {props.title}
+          </h1> 
+          <p className='Dialog-message'>
+            {props.message}
+          </p> 
+        </div>
+      )
+    }
+    //这个组件组合了两个组件
+    function WelcomeDialog() {
+      return (
+       <Dialog
+       title="Welcome"    
+       message="Thank you for visiting our spacecraft!" 
+       />
+      );
+    }
+    ReactDOM.render(<WelcomeDialog />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

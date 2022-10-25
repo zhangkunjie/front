@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+通过花括号包裹代码，你可以在 JSX 中嵌入表达式。这也包括 JavaScript 中的逻辑与 (&&) 运算符。它可以很方便地进行元素的条件渲染：
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    function Mailebox(props) {
+      const unreadMessages = props.unreadMessages;
+      return (
+        <div>
+          <h1>Hello!</h1>
+          {unreadMessages.length > 0 &&
+            <h2>
+              You have  {unreadMessages.length} unread messages.
+            </h2>
+          }
+        </div>
+      )
+    }
+    const messages = ['React', 'Re: React', 'Re:Re: React'];
+    ReactDOM.render(<Mailebox unreadMessages={messages} />, document.getElementById('root'));
+  </script>
+</body>
+</html>

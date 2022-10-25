@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  在firefox的控制台就可以观察Profile的调试效果
+  Profiler 能添加在 React 树中的任何地方来测量树中这部分渲染所带来的开销。 它需要两个 prop ：一个是 id(string)，一个是当组件树中的组件“提交”更新的时候被React调用的回调函数
+  onRender(function)。
+  <div id="root"></div>
+  <script type="text/babel">
+    class Hello extends React.Component {
+      constructor(props) {
+        super(props);
+        this.handleNumberAdd = this.handleNumberAdd.bind(this);
+        this.state = {
+          counter: 0
+        };
+      }
+      handleNumberAdd() {
+        this.setState(
+          {
+            counter: this.state.counter + 1
+          }
+        )
+      }
+      render() {
+        return (
+          <h5>
+            <button onClick={this.handleNumberAdd}>数字自增</button>
+            {this.state.counter}
+          </h5>
+        );
+      }
+    }
+    ReactDOM.render(<Hello />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

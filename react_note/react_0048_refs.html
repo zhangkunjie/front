@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  我们在日常写React代码的时候，一般情况是用不到Refs这个东西，因为我们并不直接操作底层DOM元素，而是在render函数里去编写我们的页面结构，由React来组织DOM元素的更新。
+
+凡事总有例外，总会有一些很奇葩的时候我们需要直接去操作页面的真实DOM，这就要求我们有直接访问真实DOM的能力，而Refs就是为我们提供了这样的能力。
+  我们通过调用 React.createRef 创建了一个 React ref 并将其赋值给 ref 变量。<br>
+  我们通过指定 ref 为 JSX 属性，将其向下传递给 FancyButton ref={ref}。<br>
+  React 传递 ref 给 forwardRef 内函数 (props, ref) => ...，作为其第二个参数。<br>
+  我们向下转发该 ref 参数到 button ref={ref}，将其指定为 JSX 属性。<br>
+  当 ref 挂载完成，ref.current 将指向 button DOM 节点。<br>
+  <div id="root"></div>
+  <script type="text/babel">
+    const FancyButton = React.forwardRef((props, ref) => 
+    (
+      <button ref={ref} className="FancyButton">   
+         {props.children}
+     </button>
+    ));
+    // 你可以直接获取 DOM button 的 ref：
+    const ref = React.createRef();
+    ReactDOM.render(<FancyButton ref={ref}>提交</FancyButton>, document.getElementById('root'));
+    //ref.current就代表<button>这个dom元素本身
+    console.log(ref.current);
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  React 有十分强大的组合模式。我们推荐使用组合而非继承来实现组件间的代码重用。
+  <div id="root"></div>
+  <script type="text/babel">
+    function SplitPane(props) {
+      return (
+        <div className='SplitPane'>
+          <div className='SplitPane-left'>
+            {props.left}
+          </div>
+          <div className='SplitPane-left'>
+            {props.ritght}
+          </div>
+        </div>
+      )
+    }
+    //联系人组件
+    function Contracts(props) {
+      return (
+        <h5>联系人信息组件</h5>
+      )
+    }
+    //聊天组件
+    function Chat(props) {
+      return (
+        <h5>聊天组件</h5>
+      )
+    }
+    //这个组件组合了两个组件
+    function App() {
+      return (
+        <SplitPane
+          left={<Contracts />}
+          ritght={<Chat />}
+        />
+      );
+    }
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

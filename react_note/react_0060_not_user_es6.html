@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  如果你还未使用过 ES6，你可以使用 create-react-class 模块：
+  <div id="root"></div>
+  <script type="text/babel">
+  //这里暂时有问题，以后处理
+  var createReactClass = require('create-react-class');  
+  var Hello = React.createClass({
+  getInitialState: function() {
+    return {message: 'Hello!'};
+  },
+  //不使用es创建的组件，这个函数不需要绑定this，在render方法中可以直接使用
+  handleClick: function() {
+    alert(this.state.message);
+  },
+  render: function() {
+    return (
+      <button onClick={this.handleClick}>
+        Say hello
+      </button>
+    );
+  }
+});
+  ReactDOM.render(<Hello />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

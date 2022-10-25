@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  <!--两个输入:摄氏温度和华氏温度,相互独立，不能自动转化-->
+  <div id="root"></div>
+  <script type="text/babel">
+    const scaleNames={
+      c:'Celsius',
+      f:'Fahrenheit'
+    }
+
+    class TemperatureInput extends React.Component {
+      constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.state = { temperature: '' };
+      }
+      handleChange(e) {
+        this.setState({ temperature: e.target.value });
+      }
+      render() {
+        const temperature = this.state.temperature;
+        const scale=this.props.scale;
+        return (
+          <fieldset>
+            <legend>输入:{scaleNames[scale]}:单位水温</legend>
+            <input type="text" value={temperature} onChange={this.handleChange} />
+          </fieldset>
+        );
+      }
+    }
+    class Calculator extends React.Component{
+      render(){
+        return (
+          <div>
+            <TemperatureInput scale='c'/>
+            <TemperatureInput scale='f'/>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<Calculator/>, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  问题在于 PureComponent 仅仅会对新老 this.props.words 的值进行简单的对比。
+  由于代码中 WordAdder 的 handleClick 方法改变了同一个 words 数组，
+  使得新老 this.props.words 比较的其实还是同一个数组。即便实际上数组中的单词已经变了，
+  但是比较结果是相同的。可以看到，即便多了新的单词需要被渲染， ListOfWords 却并没有被更新。
+  <div id="root"></div>
+  <script type="text/babel">
+    //用逗号来分割单次组
+    //PureComponent 需要改成Component 才会进行深对比
+    class ListOfWords extends React.PureComponent {
+      render() {
+        return (
+          <div>{this.props.words.join(',')}</div>
+        )
+      }
+    }
+    class WordAdder extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          words: ['abc']
+        };
+        this.handleClick = this.handleClick.bind(this);
+      }
+      handleClick() {
+        // 这部分代码很糟，而且还有 bug
+        const words = this.state.words;
+        words.push('def');
+        this.setState({ words: words });
+      }
+      render() {
+        return (
+          <div>
+            <button onClick={this.handleClick}>添加元素</button>
+            <ListOfWords words={this.state.words} />
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<WordAdder />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

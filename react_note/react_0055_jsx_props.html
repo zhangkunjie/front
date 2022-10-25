@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  属性展开 <br>
+  如果你已经有了一个 props 对象，你可以使用展开运算符 ... 来在 JSX 中传递整个 props 对象。以下两个组件是等价的： <br>
+  你还可以选择只保留当前组件需要接收的 props，并使用展开运算符将其他 props 传递下去。
+  <div id="root"></div>
+  <script type="text/babel">
+  const Button=props=>{
+    const {kind,...other}=props;
+    const className = kind === "primary" ? "PrimaryButton" : "SecondaryButton";
+    return <button className={className} {...other} />;
+  }
+  const App=()=>{
+    return (
+    <div>
+      <Button kind="primary" onClick={() => console.log("clicked!")}>
+        Hello World!
+      </Button>
+    </div>
+  );
+  };
+    
+  ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

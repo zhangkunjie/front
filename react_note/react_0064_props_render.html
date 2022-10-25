@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add React in One Minute</title>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+  术语“render prop”是指一种在react组件之间使用一个值为函数的prop共享代码的简单技术。
+  具有 render prop 的组件接受一个函数，该函数返回一个 React 元素并调用它而不是实现自己的渲染逻辑。
+  <div id="root"></div>
+  <script type="text/babel">
+    class ShowHello extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          greet: "Hello World"
+        }
+      }
+      render() {
+        return (
+          //这里报错:this.props.render() is not a function -- 暂时跳过，回头再看 
+          //不同的组件共享同一个状态，且不需要创建一个新的ShowHello组件
+          //你可以认为现在prop传的不是具体某个状态，而是一个函数，函数体是要渲染（或者说使用共享状态）的组件，函数的参数为实际的传入渲染组件的state。
+          <p>{this.props.render(this.state.greet)} </p>
+        )
+      }
+    }
+    //现在我们有一个组件Page，想要获取组件ShowHello的greet此时的状态（即“Hello World”），我们常规的做法可以是：在ShowHello组件内部的渲染方法渲染 Page组件：
+    class Page extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          greet: this.props.greet     //获取父组件（ShowHello）的prop
+        }
+      }
+      render() {
+        return (
+          <div>
+            <p>{this.state.greet}</p>
+          </div>
+        )
+      }
+    }
+    class Home extends React.Component {
+      render() {
+        //通过render prop的方式决定哪个组件渲染使用此状态，达到复用目的
+        return (
+          <div>
+            <ShowHello render={greet => (
+              <Page greet={greet} />
+            )} />
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<ShowHello />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>
